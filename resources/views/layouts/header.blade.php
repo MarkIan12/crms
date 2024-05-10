@@ -107,40 +107,40 @@
                         </a>
                         <div class="collapse" id="charts">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/client') }}">Current</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="">Prospects</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="">Archived</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/client') }}">Current</a></li>
+                                <li class="nav-item"><a class="nav-link" href="">Prospects</a></li>
+                                <li class="nav-item"><a class="nav-link" href="">Archived</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#tables">
+                        <a class="nav-link" href="javascript:void(0);" data-target="#tables" aria-expanded="false" aria-controls="tables" onclick="toggleTables(event)">
                             <i class="icon-grid-2 menu-icon"></i>
                             <span class="menu-title">Client Transaction</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="tables">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/customer_requirement') }}">Customer Requirement</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/product_evaluation') }}">Request for Product Evaluation</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/sample_request') }}">Sample Request Form</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/price_monitoring') }}">Price Monitoring</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/customer_requirement') }}">Customer Requirement</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/product_evaluation') }}">Request for Product Evaluation</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/sample_request') }}">Sample Request Form</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/price_monitoring') }}">Price Monitoring</a></li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#tables2" aria-expanded="false" aria-controls="tables2" onclick="toggleSetup(event)">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#tables2" aria-expanded="false" aria-controls="tables2" onclick="toggleSetup(event)">
                                         <span class="menu-title">Setup</span>
                                         <i class="menu-arrow"></i>
                                     </a>
-                                    <div class="collapse" id="tables2">
-                                        <ul class="nav flex-column sub-menu">
-                                            <li class="nav-item"> <a class="nav-link setup-item" href="{{ url('/setup_item1') }}">Setup Item 1</a></li>
-                                            <li class="nav-item"> <a class="nav-link setup-item" href="{{ url('/setup_item2') }}">Setup Item 2</a></li>
-                                            <!-- Add more setup items as needed -->
-                                        </ul>
-                                    </div>
                                 </li>
                             </ul>
                         </div>
                     </li>
+                    <!-- Separate collapse for setup submenu -->
+                    <div class="collapse" id="tables2">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item1') }}">Categorization</a></li>
+                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item2') }}">Project Name</a></li>
+                        </ul>
+                    </div>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
                             <i class="icon-contract menu-icon"></i>
@@ -895,10 +895,19 @@
             font-style: normal;
         }
     </style>
+
     <script>
-        
+        function toggleSetup(event) {
+            event.preventDefault(); 
+            $('#tables2').collapse('toggle'); 
+        }
+        function toggleTables(event) {
+            event.preventDefault();
+            $('#tables').collapse('toggle'); 
+        }
     </script>
-    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
