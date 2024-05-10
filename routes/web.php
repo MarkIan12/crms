@@ -58,4 +58,22 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Customer Complaint 
     Route::get('/customer_complaint', 'CustomerComplaintController@index')->name('customer_complaint.index');
+
+    // Nature of Request
+    Route::get('/nature_request', 'NatureRequestController@index')->name('nature_request.index');
+
+    // Project Name
+    Route::get('/project_name', 'ProjectNameController@index')->name('project_name.index');
+
+    // CRR Priority
+    Route::get('/crr_priority', 'CrrPriorityController@index')->name('crr_priority.index');
+
+    // Issue Category
+    Route::get('/issue_category', 'IssueCategoryController@index')->name('issue_category.index');
+
+    // Concerned Department
+    Route::get('/concern_department', 'ConcernDepartmentController@index')->name('concern_department.index');
+
+    // Activities
+    Route::get('/activities', 'ActivityController@index')->name('activities.index');
 });

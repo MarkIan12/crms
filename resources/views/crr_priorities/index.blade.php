@@ -4,17 +4,15 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title d-flex justify-content-between align-items-center">
-            Product List 
-            <button type="button" class="btn btn-md btn-primary" name="add_product" id="add_product">Add Product</button>
+            CRR Priority List
+            <button type="button" class="btn btn-md btn-primary" name="add_crr_priority" id="add_crr_priority">Add CRR Priority</button>
             </h4>
-            <table class="table table-striped table-hover" id="product_table" width="100%">
+            <table class="table table-striped table-hover" id="crr_priority_table" width="100%">
                 <thead>
                     <tr>
-                        <th width="15%">DDW Number</th>
-                        <th width="20%">Code</th>
-                        <th width="20%">Reference Number</th>
-                        <th width="20%">Product Origin</th>
-                        <th width="15%">Type</th>
+                        <th width="30%">Name</th>
+                        <th width="30%">Description</th>
+                        <th width="30%">Days</th>
                         <th width="10%">Action</th>
                     </tr>
                 </thead>
@@ -28,48 +26,37 @@
 
 <script>
     $(document).ready(function(){
-        $('#product_table').DataTable({
+        $('#crr_priority_table').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('product.index') }}"
+                url: "{{ route('crr_priority.index') }}"
             },
             columns: [
                 {
-                    data: 'ddw_number',
-                    name: 'ddw_number',
-                    width: '15%'
+                    data: 'Name',
+                    name: 'Name'
                 },
                 {
-                    data: 'code',
-                    name: 'code',
-                    width: '20%'
+                    data: 'Description',
+                    name: 'Description',
+                    style: {
+                        'word-wrap': 'break-word'
+                    }
                 },
                 {
-                    data: 'reference_no',
-                    name: 'reference_no',
-                    width: '20%'
-                },
-                {
-                    data: 'product_origin',
-                    name: 'product_origin',
-                    width: '20%'
-                },
-                {
-                    data: 'type',
-                    name: 'type',
-                    width: '15%'
+                    data: 'Days',
+                    name: 'Days'
                 },
                 {
                     data: 'action',
                     name: 'action',
-                    width: '10%',
                     orderable: false
                 }
             ],
             columnDefs: [
                 {
-                    targets: 3, // Target the Title column
+                    targets: 1, // Target the Description column
                     render: function(data, type, row) {
                         return '<div style="white-space: break-spaces; width: 100%;">' + data + '</div>';
                     }

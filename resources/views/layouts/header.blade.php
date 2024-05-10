@@ -138,10 +138,38 @@
                     <div class="collapse" id="tables2">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item1') }}">Categorization</a></li>
-                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item2') }}">Project Name</a></li>
+                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/project_name') }}">Project Name</a></li>
+                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/nature_request') }}">Nature of Request</a></li>
+                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/crr_priority') }}">CRR Priority</a></li>
                         </ul>
                     </div>
                     <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);" data-target="#table_service" aria-expanded="false" aria-controls="table_service" onclick="toggleTablesService(event)">
+                            <i class="icon-grid-2 menu-icon"></i>
+                            <span class="menu-title">Service Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="table_service">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="{{ url('/customer_complaint') }}">Customer Complaints</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="">Customer Feedbacks</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#table_service2" aria-expanded="false" aria-controls="table_service2" onclick="toggleSetupService(event)">
+                                        <span class="menu-title">Setup</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Separate collapse for setup submenu -->
+                    <div class="collapse" id="table_service2">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/issue_category') }}">Issue Category</a></li>
+                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Concerned Department</a></li>
+                        </ul>
+                    </div>
+                    <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
                             <i class="icon-contract menu-icon"></i>
                             <span class="menu-title">Service Management</span>
@@ -154,9 +182,9 @@
                                 <li class="nav-item"> <a class="nav-link" href="">Setup</a></li>
                             </ul>
                         </div>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/documentation/documentation.html">
+                        <a class="nav-link" href="{{ url('/activities') }}">
                         <i class="icon-paper menu-icon"></i>
                         <span class="menu-title">Activities</span>
                         </a>
@@ -904,6 +932,14 @@
         function toggleTables(event) {
             event.preventDefault();
             $('#tables').collapse('toggle'); 
+        }
+        function toggleSetupService(event) {
+            event.preventDefault(); 
+            $('#table_service2').collapse('toggle'); 
+        }
+        function toggleTablesService(event) {
+            event.preventDefault();
+            $('#table_service').collapse('toggle'); 
         }
     </script>
 

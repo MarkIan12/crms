@@ -4,18 +4,18 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title d-flex justify-content-between align-items-center">
-            Product List 
-            <button type="button" class="btn btn-md btn-primary" name="add_product" id="add_product">Add Product</button>
+            Activity List
+            <button type="button" class="btn btn-md btn-primary" name="add_activity" id="add_activity">Add Activity</button>
             </h4>
-            <table class="table table-striped table-hover" id="product_table" width="100%">
+            <table class="table table-striped table-hover" id="activity_table" width="100%">
                 <thead>
                     <tr>
-                        <th width="15%">DDW Number</th>
-                        <th width="20%">Code</th>
-                        <th width="20%">Reference Number</th>
-                        <th width="20%">Product Origin</th>
-                        <th width="15%">Type</th>
-                        <th width="10%">Action</th>
+                        <th>#</th>
+                        <th>Schedule</th>
+                        <th>Client</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
             </table>
@@ -28,42 +28,36 @@
 
 <script>
     $(document).ready(function(){
-        $('#product_table').DataTable({
+        $('#activity_table').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('product.index') }}"
+                url: "{{ route('activities.index') }}"
             },
             columns: [
                 {
-                    data: 'ddw_number',
-                    name: 'ddw_number',
-                    width: '15%'
+                    data: 'ActivityNumber',
+                    name: 'ActivityNumber'
                 },
                 {
-                    data: 'code',
-                    name: 'code',
-                    width: '20%'
+                    data: 'ScheduleFrom',
+                    name: 'ScheduleFrom'
                 },
                 {
-                    data: 'reference_no',
-                    name: 'reference_no',
-                    width: '20%'
+                    data: 'ClientId',
+                    name: 'ClientId'
                 },
                 {
-                    data: 'product_origin',
-                    name: 'product_origin',
-                    width: '20%'
+                    data: 'Title',
+                    name: 'Title'
                 },
                 {
-                    data: 'type',
-                    name: 'type',
-                    width: '15%'
+                    data: 'Status',
+                    name: 'Status'
                 },
                 {
                     data: 'action',
                     name: 'action',
-                    width: '10%',
                     orderable: false
                 }
             ],
