@@ -73,20 +73,44 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                        <a class="nav-link" href="javascript:void(0);" data-target="#table_product" aria-expanded="false" aria-controls="table_product" onclick="toggleTablesProduct(event)">
                             <i class="icon-layout menu-icon"></i>
                             <span class="menu-title">Product Management</span>
                             <i class="menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="ui-basic">
+                        <div class="collapse" id="table_product">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="">Products</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="">Certificate of Analysis</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="">Pricing</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="">Setup</a></li>
+                                <li class="nav-item"><a class="nav-link" href="">Products</a></li>
+                                <li class="nav-item"><a class="nav-link" href="">Certificate of Analysis</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#table_pricing2" aria-expanded="false" aria-controls="table_pricing2" onclick="toggleSetupPricing(event)">
+                                        <span class="menu-title">Pricing</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#table_product2" aria-expanded="false" aria-controls="table_product2" onclick="toggleSetupProduct(event)">
+                                        <span class="menu-title">Setup</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="table_pricing2">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item1') }}">Current Base Price</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/project_name') }}">New Base Price</a></li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="table_product2">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/product_applications') }}">Product Applications</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/product_subcategories') }}">Product Subcategories</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/raw_material') }}">Raw Materials</a></li>
                             </ul>
                         </div>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                             <i class="icon-columns menu-icon"></i>
@@ -190,7 +214,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#module" aria-expanded="false" aria-controls="module">
+                        <a class="nav-link" href="javascript:void(0);" data-target="#module" aria-expanded="false" aria-controls="module" onclick="toggleModule(event)">
                             <i class="icon-layout menu-icon"></i>
                             <span class="menu-title">Module Setup</span>
                             <i class="menu-arrow"></i>
@@ -201,10 +225,56 @@
                                 <li class="nav-item"><a class="nav-link" href="">Accounting Users</a></li>
                                 <li class="nav-item"><a class="nav-link" href="">Production Users</a></li>
                                 <li class="nav-item"><a class="nav-link" href="">Sales</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Location</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Business</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Payment Currency</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Accounting</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#nav_location" aria-expanded="false" aria-controls="nav_location" onclick="toggleLocation(event)">
+                                        <span class="menu-title">Location</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#nav_business" aria-expanded="false" aria-controls="nav_business" onclick="toggleBusiness(event)">
+                                        <span class="menu-title">Business</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#nav_payment_currency" aria-expanded="false" aria-controls="nav_payment_currency" onclick="togglePaymentCurrency(event)">
+                                        <span class="menu-title">Payment Currency</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#nav_accounting" aria-expanded="false" aria-controls="nav_accounting" onclick="toggleSetupAccounting(event)">
+                                        <span class="menu-title">Accounting</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="nav_location">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/region') }}">Region</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/country') }}">Country</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/area') }}">Area</a></li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="nav_business">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/issue_category') }}">Business Type</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Industry</a></li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="nav_payment_currency">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/issue_category') }}">Price Currencies</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Currency Exchange Rates</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Payment Terms</a></li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="nav_accounting">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/issue_category') }}">Price Request Fixed Cost</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Price Request GAE</a></li>
                             </ul>
                         </div>
                     </li>
@@ -924,26 +994,6 @@
         }
     </style>
 
-    <script>
-        function toggleSetup(event) {
-            event.preventDefault(); 
-            $('#tables2').collapse('toggle'); 
-        }
-        function toggleTables(event) {
-            event.preventDefault();
-            $('#tables').collapse('toggle'); 
-        }
-        function toggleSetupService(event) {
-            event.preventDefault(); 
-            $('#table_service2').collapse('toggle'); 
-        }
-        function toggleTablesService(event) {
-            event.preventDefault();
-            $('#table_service').collapse('toggle'); 
-        }
-    </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
@@ -951,6 +1001,7 @@
     <script src="{{ asset('js/dataTables.select.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 
     <script src="{{ asset('js/off-canvas.js') }}"></script>
     <script src="{{ asset('js/hoverable-collapse.js') }}"></script>

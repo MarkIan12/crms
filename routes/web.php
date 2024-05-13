@@ -76,4 +76,36 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Activities
     Route::get('/activities', 'ActivityController@index')->name('activities.index');
+
+    // Product Applications
+    Route::get('/product_applications', 'ProductApplicationController@index')->name('product_applications.index');
+
+    // Product Subcategories
+    Route::get('/product_subcategories', 'ProductSubcategoriesController@index')->name('product_subcategories.index');
+
+    // Raw Material
+    Route::get('/raw_material', 'RawMaterialController@index')->name('raw_material.index');
+
+    // Price Request Fixed Cost
+    Route::get('/price_fixed_cost', 'RawMaterialController@index')->name('price_fixed_cost.index');
+
+    // Price Request GAE
+    Route::get('/raw_material', 'RawMaterialController@index')->name('raw_material.index');
+
+    // Region
+    Route::get('/region', 'RegionController@index')->name('region.index');
+    Route::post('/new_region', 'RegionController@store')->name('region.store');
+    Route::get('/edit_region/{id}', 'RegionController@edit')->name('edit_region');
+    Route::post('update_region/{id}', 'RegionController@update')->name('update_region');
+    Route::get('delete_region/{id}', 'RegionController@delete')->name('delete_region');
+
+    // Country
+    Route::get('/country', 'CountryController@index')->name('country.index');
+    Route::post('/new_country', 'CountryController@store')->name('country.store');
+    Route::get('/edit_country/{id}', 'CountryController@edit')->name('edit_country');
+    Route::post('update_country/{id}', 'CountryController@update')->name('update_country');
+    Route::get('delete_country/{id}', 'CountryController@delete')->name('delete_country');
+
+    // Area
+    Route::get('/area', 'AreaController@index')->name('area.index');
 });
