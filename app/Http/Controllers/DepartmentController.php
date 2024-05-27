@@ -27,7 +27,7 @@ class DepartmentController extends Controller
         }
         return view('departments.index', compact('departments', 'companies'));
     }
-
+    
     // Store
     public function store(Request $request) 
     {

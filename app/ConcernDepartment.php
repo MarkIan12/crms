@@ -8,4 +8,7 @@ class ConcernDepartment extends Model
 {
     use SoftDeletes;
     protected $table = "customerserviceconcerneddepartm";
+    protected $fillable = [
+        'Name', 'Description'
+    ];
 }

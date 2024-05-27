@@ -21,17 +21,17 @@
         </div>
     </div>
 </div>
-<!-- <div class="modal fade" id="formRegion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formArea" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Region</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add New Area</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="form_region" enctype="multipart/form-data" action="{{ route('region.store') }}">
+                <form method="POST" id="form_area" enctype="multipart/form-data" action="{{ route('region.store') }}">
                     <span id="form_result"></span>
                     @csrf
                     <div class="form-group">
@@ -43,8 +43,17 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="name">Region</label>
-                        <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter Region">
+                        <label>Region</label>
+                        <select class="form-control js-example-basic-single" name="RegionId" id="RegionId" style="position: relative !important" title="Select Company">
+                            <option value="" disabled selected>Select Region</option>
+                            @foreach($regions as $region)
+                                <option value="{{ $region->Id }}">{{ $region->Name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Area</label>
+                        <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter Area Name">
                     </div>
                     <div class="form-group">
                         <label for="name">Description</label>
@@ -75,11 +84,11 @@
             </div>
             <div class="modal-footer" style="padding: 0.6875rem">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" name="yes_button" id="yes_button" class="btn btn-danger">Yes</button>
+                <button type="button" name="delete_area" id="delete_area" class="btn btn-danger">Yes</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
@@ -135,139 +144,141 @@
             ]
         });
 
-        // $('#add_area').click(function(){
-        //     $('#formRegion').modal('show');
-        //     $('.modal-title').text("Add Region");
-        // });
+        $('#add_area').click(function(){
+            $('#formArea').modal('show');
+            $('.modal-title').text("Add New Area");
+        });
 
-        // $('#form_region').on('submit', function(event){
-        //     event.preventDefault();
-        //     if($('#action').val() == 'Save')
-        //     {
-        //         $.ajax({
-        //             url: "{{ route('region.store') }}",
-        //             method: "POST",
-        //             data: new FormData(this),
-        //             contentType: false,
-        //             cache: false,
-        //             processData: false,
-        //             dataType: "json",
-        //             success: function(data)
-        //             {
-        //                 var html = '';
-        //                 if(data.errors)
-        //                 {
-        //                     html = '<div class="alert alert-danger">';
-        //                     for(var count = 0; count < data.errors.length; count++)
-        //                     {
-        //                         html += '<p>' + data.errors[count] + '</p>';
-        //                     }
-        //                     html += '</div>';
-        //                 }
-        //                 if(data.success)
-        //                 {
-        //                     html = '<div class="alert alert-success">' + data.success + '</div>';
-        //                     $('#form_region')[0].reset();
-        //                     setTimeout(function(){
-        //                         $('#formRegion').modal('hide');
-        //                     }, 2000);
-        //                     $('#area_table').DataTable().ajax.reload();
-        //                     setTimeout(function(){
-        //                         $('#form_result').empty(); 
-        //                     }, 2000); 
-        //                 }
-        //                 $('#form_result').html(html);
-        //             }
-        //         })
-        //     }
+        $('#form_area').on('submit', function(event){
+            event.preventDefault();
+            if($('#action').val() == 'Save')
+            {
+                $.ajax({
+                    url: "{{ route('area.store') }}",
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(data)
+                    {
+                        var html = '';
+                        if(data.errors)
+                        {
+                            html = '<div class="alert alert-danger">';
+                            for(var count = 0; count < data.errors.length; count++)
+                            {
+                                html += '<p>' + data.errors[count] + '</p>';
+                            }
+                            html += '</div>';
+                        }
+                        if(data.success)
+                        {
+                            html = '<div class="alert alert-success">' + data.success + '</div>';
+                            $('#form_area')[0].reset();
+                            setTimeout(function(){
+                                $('#formArea').modal('hide');
+                            }, 2000);
+                            $('#area_table').DataTable().ajax.reload();
+                            setTimeout(function(){
+                                $('#form_result').empty(); 
+                            }, 2000); 
+                        }
+                        $('#form_result').html(html);
+                    }
+                })
+            }
 
-        //     if($('#action').val() == 'Edit')
-        //     {
-        //         var formData = new FormData(this);
-        //         formData.append('Id', $('#hidden_id').val());
-        //         $.ajax({
-        //             url: "{{ route('update_region', ':Id') }}".replace(':Id', $('#hidden_id').val()),
-        //             method: "POST",
-        //             data: new FormData(this),
-        //             contentType: false,
-        //             cache: false,
-        //             processData: false,
-        //             dataType: "json",
-        //             success:function(data)
-        //             {
-        //                 var html = '';
-        //                 if(data.errors)
-        //                 {
-        //                     html = '<div class="alert alert-danger">';
-        //                     for(var count = 0; count < data.errors.length; count++)
-        //                     {
-        //                         html += '<p>' + data.errors[count] + '</p>';
-        //                     }
-        //                     html += '</div>';
-        //                 }
-        //                 if(data.success)
-        //                 {
-        //                     html = '<div class="alert alert-success">' + data.success + '</div>';
-        //                     $('#form_region')[0].reset();
-        //                     setTimeout(function(){
-        //                         $('#formRegion').modal('hide');
-        //                     }, 2000);
-        //                     $('#area_table').DataTable().ajax.reload();
-        //                     setTimeout(function(){
-        //                         $('#form_result').empty(); 
-        //                     }, 2000); 
-        //                 }
-        //                 $('#form_result').html(html);
-        //             }
-        //         });
-        //     }
-        // });
+            if($('#action').val() == 'Edit')
+            {
+                var formData = new FormData(this);
+                formData.append('Id', $('#hidden_id').val());
+                $.ajax({
+                    url: "{{ route('update_area', ':Id') }}".replace(':Id', $('#hidden_id').val()),
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+                    success:function(data)
+                    {
+                        var html = '';
+                        if(data.errors)
+                        {
+                            html = '<div class="alert alert-danger">';
+                            for(var count = 0; count < data.errors.length; count++)
+                            {
+                                html += '<p>' + data.errors[count] + '</p>';
+                            }
+                            html += '</div>';
+                        }
+                        if(data.success)
+                        {
+                            html = '<div class="alert alert-success">' + data.success + '</div>';
+                            $('#form_area')[0].reset();
+                            setTimeout(function(){
+                                $('#formArea').modal('hide');
+                            }, 2000);
+                            $('#area_table').DataTable().ajax.reload();
+                            setTimeout(function(){
+                                $('#form_result').empty(); 
+                            }, 2000); 
+                        }
+                        $('#form_result').html(html);
+                    }
+                });
+            }
+        });
 
-        // $(document).on('click', '.edit', function(){
-        //     var id = $(this).attr('Id');
-        //     $('#form_result').html('');
-        //     $.ajax({
-        //         url: "{{ route('edit_region', ['Id' => '_id_']) }}".replace('_id_', id),
-        //         dataType: "json",
-        //         success: function(html){
-        //             $('#Name').val(html.data.Name);
-        //             $('#Description').val(html.data.Description);
-        //             $('#hidden_id').val(html.data.Id);
-        //             $('.modal-title').text("Edit Region");
-        //             $('#action_button').val("Update");
-        //             $('#action').val("Edit");
+        $(document).on('click', '.edit', function(){
+            var id = $(this).attr('Id');
+            $('#form_result').html('');
+            $.ajax({
+                url: "{{ route('edit_area', ['Id' => '_id_']) }}".replace('_id_', id),
+                dataType: "json",
+                success: function(html){
+                    $('#Type').val(html.data.Type).trigger('change');
+                    $('#RegionId').val(html.data.RegionId).trigger('change');
+                    $('#Name').val(html.data.Name);
+                    $('#Description').val(html.data.Description);
+                    $('#hidden_id').val(html.data.Id);
+                    $('.modal-title').text("Edit Region");
+                    $('#action_button').val("Update");
+                    $('#action').val("Edit");
                     
-        //             var type = html.data.Type;
-        //             $('#Type').val(type);
+                    var type = html.data.Type;
+                    $('#Type').val(type);
                     
-        //             $('#formRegion').modal('show');
-        //         }
-        //     });
-        // });
+                    $('#formArea').modal('show');
+                }
+            });
+        });
 
-        
-        // $(document).on('click', '.delete', function(){
-        //     region_id = $(this).attr('Id');
-        //     $('#confirmModal').modal('show');
-        //     $('.modal-title').text("Delete Region");
-        // });    
+        var area_id;
+        $(document).on('click', '.delete', function(){
+            area_id = $(this).attr('id');
+            $('#confirmModal').modal('show');
+            $('.modal-title').text("Delete Area");
+        });    
 
-        // $('#yes_button').click(function(){
-        //     $.ajax({
-        //         url: "{{ url('delete_region') }}/" + region_id, 
-        //         method: "GET",
-        //         beforeSend:function(){
-        //             $('#yes_button').text('Deleting...');
-        //         },
-        //         success:function(data)
-        //         {
-        //             setTimeout(function(){
-        //                 $('#confirmModal').modal('hide');
-        //                 $('#area_table').DataTable().ajax.reload();
-        //             }, 2000);
-        //         }
-        //     })
-        // });
+        $('#delete_area').click(function(){
+            $.ajax({
+                url: "{{ url('delete_area') }}/" + area_id, 
+                method: "GET",
+                beforeSend:function(){
+                    $('#delete_area').text('Deleting...');
+                },
+                success:function(data)
+                {
+                    setTimeout(function(){
+                        $('#confirmModal').modal('hide');
+                        $('#area_table').DataTable().ajax.reload();
+                    }, 2000);
+                }
+            })
+        });
     });
 </script>
 @endsection 

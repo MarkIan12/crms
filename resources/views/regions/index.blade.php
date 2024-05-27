@@ -239,8 +239,7 @@
                 }
             });
         });
-
-        
+                
         $(document).on('click', '.delete', function(){
             region_id = $(this).attr('Id');
             $('#confirmModal').modal('show');

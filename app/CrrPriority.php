@@ -8,4 +8,7 @@ class CrrPriority extends Model
 {
     use SoftDeletes;
     protected $table = "crrpriorities";
+    protected $fillable = [
+        'Name', 'Description', 'Days'
+    ];
 }

@@ -47,3 +47,8 @@ function toggleLocation(event) {
   event.preventDefault(); 
   $('#nav_location').collapse('toggle'); 
 }
+// Product Management (Products)
+function toggleProducts(event) {
+  event.preventDefault(); 
+  $('#nav_products').collapse('toggle'); 
+}

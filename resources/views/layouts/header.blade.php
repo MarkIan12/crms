@@ -44,14 +44,22 @@
                             <img src="{{ asset('/images/user.png')}}" alt="profile"/>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a href="{{ route('change_password') }}" class="dropdown-item">
                                 <i class="ti-settings text-primary"></i>
                                 Change Password
                             </a>
-                            <a class="dropdown-item">
+                            <!-- <a class="dropdown-item">
                                 <i class="ti-power-off text-primary"></i>
                                 Logout
+                            </a> -->
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="ti-power-off text-primary"></i>
+                                {{ __('Logout') }}
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                     </li>
                 </ul>
@@ -80,7 +88,12 @@
                         </a>
                         <div class="collapse" id="table_product">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link" href="">Products</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0);" data-target="#nav_products" aria-expanded="false" aria-controls="nav_products" onclick="toggleProducts(event)">
+                                        <span class="menu-title">Products</span>
+                                        <i class="menu-arrow"></i>
+                                    </a>
+                                </li>
                                 <li class="nav-item"><a class="nav-link" href="">Certificate of Analysis</a></li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="javascript:void(0);" data-target="#table_pricing2" aria-expanded="false" aria-controls="table_pricing2" onclick="toggleSetupPricing(event)">
@@ -96,10 +109,17 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="collapse" id="nav_products">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/products') }}">Current Products</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/draft_products') }}">Draft Products</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/archived_products') }}">Archived Products</a></li>
+                            </ul>
+                        </div>
                         <div class="collapse" id="table_pricing2">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item1') }}">Current Base Price</a></li>
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/project_name') }}">New Base Price</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/base_price') }}">Current Base Price</a></li>
+                                <!-- <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/project_name') }}">New Base Price</a></li> -->
                             </ul>
                         </div>
                         <div class="collapse" id="table_product2">
@@ -132,8 +152,8 @@
                         <div class="collapse" id="charts">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"><a class="nav-link" href="{{ url('/client') }}">Current</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Prospects</a></li>
-                                <li class="nav-item"><a class="nav-link" href="">Archived</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/client_prospect') }}">Prospects</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/client_archived') }}">Archived</a></li>
                             </ul>
                         </div>
                     </li>
@@ -161,7 +181,7 @@
                     <!-- Separate collapse for setup submenu -->
                     <div class="collapse" id="tables2">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item1') }}">Categorization</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/setup_item1') }}">Categorization</a></li> -->
                             <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/project_name') }}">Project Name</a></li>
                             <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/nature_request') }}">Nature of Request</a></li>
                             <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/crr_priority') }}">CRR Priority</a></li>
@@ -260,25 +280,25 @@
                         </div>
                         <div class="collapse" id="nav_business">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/issue_category') }}">Business Type</a></li>
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Industry</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/business_type') }}">Business Type</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('industry') }}">Industry</a></li>
                             </ul>
                         </div>
                         <div class="collapse" id="nav_payment_currency">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/issue_category') }}">Price Currencies</a></li>
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Currency Exchange Rates</a></li>
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Payment Terms</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/price_currency') }}">Price Currencies</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('currency_exchange') }}">Currency Exchange Rates</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('payment_terms') }}">Payment Terms</a></li>
                             </ul>
                         </div>
                         <div class="collapse" id="nav_accounting">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/issue_category') }}">Price Request Fixed Cost</a></li>
-                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('concern_department') }}">Price Request GAE</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/fixed_cost') }}">Price Request Fixed Cost</a></li>
+                                <li class="nav-item"><a class="nav-link setup-item" href="{{ url('/request_gae') }}">Price Request GAE</a></li>
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item"> 
                         <a class="nav-link" data-toggle="collapse" href="#setup" aria-expanded="false" aria-controls="setup">
                             <i class="icon-cog menu-icon"></i>
                             <span class="menu-title">Setup</span>
@@ -286,10 +306,10 @@
                         </a>
                         <div class="collapse" id="setup">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="">User Accounts</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/role') }}">Roles</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/company') }}">Company</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/department') }}">Department</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/user') }}">User Accounts</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/role') }}">Roles</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/company') }}">Company</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/department') }}">Department</a></li>
                             </ul>
                         </div>
                     </li>

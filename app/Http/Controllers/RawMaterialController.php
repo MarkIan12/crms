@@ -11,7 +11,7 @@ class RawMaterialController extends Controller
     {   
         if(request()->ajax())
         {
-            return datatables()->of(RawMaterial::query())
+            return datatables()->of(RawMaterial::orderBy('id', 'desc')->get())
                     ->addColumn('action', function($data){
                         $buttons = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary">Edit</button>';
                         $buttons .= '&nbsp;&nbsp;';

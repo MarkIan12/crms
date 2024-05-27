@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,5 +25,28 @@ class HomeController extends Controller
     public function index()
     {
         return view('dashboard.index');
+    }
+
+    public function changePassword()
+    {
+        return view('layouts.change_password');
+    }
+
+    public function updatePassword(Request $request)
+    {   
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed|min:8',
+        ]);
+
+        if(!Hash::check($request->old_password, auth()->user()->password)){
+            return back()->with("error", "Old password doesn't match!");
+        }
+           
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Password changed successfully!");
     }
 }

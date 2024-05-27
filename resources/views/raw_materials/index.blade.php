@@ -12,7 +12,6 @@
                     <tr>
                         <th width="30%">Material</th>
                         <th width="30%">Description</th>
-                        <th width="30%">Has Price?</th>
                         <th width="10%">Action</th>
                     </tr>
                 </thead>
@@ -30,7 +29,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('product_subcategories.index') }}"
+                url: "{{ route('raw_material.index') }}"
             },
             columns: [
                 {
@@ -39,11 +38,10 @@
                 },
                 {
                     data: 'Description',
-                    name: 'Description'
-                },
-                {
-                    data: '',
-                    name: ''
+                    name: 'Description',
+                    render: function(data, type, row) {
+                        return '<div style="white-space: break-spaces; width: 100%;">' + (data ? data : 'No Description Available') + '</div>';
+                    }
                 },
                 {
                     data: 'action',
@@ -53,7 +51,7 @@
             ],
             columnDefs: [
                 {
-                    targets: 1, // Target the column
+                    targets: 0, // Target the column
                     render: function(data, type, row) {
                         return '<div style="white-space: break-spaces; width: 100%;">' + data + '</div>';
                     }

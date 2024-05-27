@@ -22002,7 +22002,8 @@ code {
 
 .card .card-title {
   color: #010101;
-  margin-bottom: 1.2rem;
+  margin-top: .5rem;
+  margin-bottom: 2rem;
   text-transform: capitalize;
   font-size: 1.125rem;
   font-weight: 600;
@@ -23766,9 +23767,9 @@ dl li {
 }
 
 /* Modals */
-.modal .modal-dialog {
+/* .modal .modal-dialog {
   margin-top: 100px;
-}
+} */
 
 .modal .modal-dialog .modal-content .modal-header {
   padding: 25px 26px;
@@ -23781,12 +23782,12 @@ dl li {
 }
 
 .modal .modal-dialog .modal-content .modal-body {
-  padding: 35px 26px;
+  padding: 15px 25px;
 }
 
-.modal .modal-dialog .modal-content .modal-footer {
+/* .modal .modal-dialog .modal-content .modal-footer {
   padding: 5px 0px;
-}
+} */
 
 @media (max-width: 400px) {
   .modal .modal-dialog .modal-content .modal-footer {

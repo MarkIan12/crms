@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\ProjectName;
+use Validator;
 use Illuminate\Http\Request;
 
 class ProjectNameController extends Controller
@@ -11,7 +12,7 @@ class ProjectNameController extends Controller
     {   
         if(request()->ajax())
         {
-            return datatables()->of(ProjectName::query())
+            return datatables()->of(ProjectName::orderBy('id', 'desc')->get())
                     ->addColumn('action', function($data){
                         $buttons = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary">Edit</button>';
                         $buttons .= '&nbsp;&nbsp;';
@@ -22,5 +23,72 @@ class ProjectNameController extends Controller
                     ->make(true);
         }
         return view('project_name.index'); 
+    }
+
+    // Store
+    public function store(Request $request) 
+    {
+        $rules = array(
+            'Name'          =>  'required',
+            'Description'   =>  'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'Name'          =>  $request->Name,
+            'Description'   =>  $request->Description
+        );
+
+        ProjectName::create($form_data);
+
+        return response()->json(['success' => 'Data Added Successfully.']);
+    }
+
+    // Edit
+    public function edit($id)
+    {
+        if(request()->ajax())
+        {
+            $data = ProjectName::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    // Update
+    public function update(Request $request, $id)
+    {
+        $rules = array(
+            'Name'          =>  'required',
+            'Description'   =>  'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'Name'          =>  $request->Name,
+            'Description'   =>  $request->Description
+        );
+
+        ProjectName::whereId($id)->update($form_data);
+
+        return response()->json(['success' => 'Data is Successfully Updated.']);
+    }
+
+    // Delete
+    public function delete($id)
+    {
+        $data = ProjectName::findOrFail($id);
+        $data->delete();
     }
 }

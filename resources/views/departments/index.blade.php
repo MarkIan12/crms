@@ -29,7 +29,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add New Department</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button>               
             </div>
             <div class="modal-body">
                 <form method="POST" id="form_department" enctype="multipart/form-data" action="{{ route('department.store') }}">

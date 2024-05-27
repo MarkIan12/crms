@@ -8,4 +8,7 @@ class NatureRequest extends Model
 {
     use SoftDeletes;
     protected $table = "natureofrequests";
+    protected $fillable = [
+        'Name', 'Description'
+    ];
 }

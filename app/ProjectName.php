@@ -8,4 +8,7 @@ class ProjectName extends Model
 {
     use SoftDeletes;
     protected $table = "rpeprojectnames";
+    protected $fillable = [
+        'Name', 'Description'
+    ];
 }

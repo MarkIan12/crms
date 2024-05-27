@@ -4,16 +4,16 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title d-flex justify-content-between align-items-center">
-            Product List 
+            Product List (Current)
             <button type="button" class="btn btn-md btn-primary" name="add_product" id="add_product">Add Product</button>
             </h4>
             <table class="table table-striped table-hover" id="product_table" width="100%">
                 <thead>
                     <tr>
                         <th width="15%">DDW Number</th>
-                        <th width="20%">Code</th>
-                        <th width="20%">Reference Number</th>
-                        <th width="20%">Product Origin</th>
+                        <th width="30%">Code</th>
+                        <th width="30%">Reference Number</th>
+                        <!-- <th width="20%">Product Origin</th> -->
                         <th width="15%">Type</th>
                         <th width="10%">Action</th>
                     </tr>
@@ -50,15 +50,20 @@
                     name: 'reference_no',
                     width: '20%'
                 },
-                {
-                    data: 'product_origin',
-                    name: 'product_origin',
-                    width: '20%'
-                },
+                // {
+                //     data: 'product_origin',
+                //     name: 'product_origin',
+                //     width: '20%'
+                // },
                 {
                     data: 'type',
                     name: 'type',
-                    width: '15%'
+                    width: '15%',
+                    render: function(data, type, row) {
+                        // Display "Local" for type 1 and "International" for type 2
+                        return data == 1 ? 'Local' : 'International';
+                    }
+
                 },
                 {
                     data: 'action',

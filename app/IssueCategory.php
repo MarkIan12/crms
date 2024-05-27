@@ -8,4 +8,7 @@ class IssueCategory extends Model
 {
     use SoftDeletes;
     protected $table = "customerserviceissuecategories";
+    protected $fillable = [
+        'Name', 'Description'
+    ];
 }

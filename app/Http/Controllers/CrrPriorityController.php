@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\CrrPriority;
+use Validator;
 use Illuminate\Http\Request;
 
 class CrrPriorityController extends Controller
@@ -22,5 +23,76 @@ class CrrPriorityController extends Controller
                     ->make(true);
         }
         return view('crr_priorities.index'); 
+    }
+
+    // Store
+    public function store(Request $request) 
+    {
+        $rules = array(
+            'Name'          =>  'required',
+            'Description'   =>  'required',
+            'Days'          =>  'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'Name'          =>  $request->Name,
+            'Description'   =>  $request->Description,
+            'Days'          =>  $request->Days    
+        );
+
+        CrrPriority::create($form_data);
+
+        return response()->json(['success' => 'Data Added Successfully.']);
+    }
+
+    // Edit
+    public function edit($id)
+    {
+        if(request()->ajax())
+        {
+            $data = CrrPriority::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    // Update
+    public function update(Request $request, $id)
+    {
+        $rules = array(
+            'Name'          =>  'required',
+            'Description'   =>  'required',
+            'Days'          =>  'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'Name'          =>  $request->Name,
+            'Description'   =>  $request->Description,
+            'Days'          =>  $request->Days
+        );
+
+        CrrPriority::whereId($id)->update($form_data);
+
+        return response()->json(['success' => 'Data is Successfully Updated.']);
+    }
+
+    // Delete
+    public function delete($id)
+    {
+        $data = CrrPriority::findOrFail($id);
+        $data->delete();
     }
 }

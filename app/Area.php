@@ -8,11 +8,13 @@ class Area extends Model
 {
     use SoftDeletes;
     protected $table = "clientareas";
+    protected $fillable = [
+        'Type', 'Name', 'Description', 'RegionId'
+    ];
 
     public function region()
     {
-        return $this->belongsTo(Region::class, 'RegionId');
+        return $this->belongsTo(Region::class, 'RegionId', 'Id');
     }
-    
 }
 

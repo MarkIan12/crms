@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-md btn-primary" name="add_company" id="add_company">Add Company</button>
             </h4>
             <div class="table-responsive">
-                <table class="table table-striped table-hover" id="company_table">
+                <table class="table table-striped table-hover" id="company_table" width="100%">
                     <thead>
                         <tr>
                             <th width="30%">Name</th>
@@ -95,6 +95,14 @@
                     data: 'action',
                     name: 'action',
                     orderable: false
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [0, 1], // Target the first column (index 1)
+                    render: function(data, type, row) {
+                        return '<div style="white-space: break-spaces; width: 100%;">' + data + '</div>';
+                    }
                 }
             ]
         });
