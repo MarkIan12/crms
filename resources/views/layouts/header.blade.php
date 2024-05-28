@@ -306,7 +306,7 @@
                         </a>
                         <div class="collapse" id="setup">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link" href="{{ url('/user') }}">User Accounts</a></li>
+                                <!-- <li class="nav-item"><a class="nav-link" href="{{ url('/user') }}">User Accounts</a></li> -->
                                 <li class="nav-item"><a class="nav-link" href="{{ url('/role') }}">Roles</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ url('/company') }}">Company</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ url('/department') }}">Department</a></li>
