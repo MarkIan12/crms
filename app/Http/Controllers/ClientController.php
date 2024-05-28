@@ -321,10 +321,27 @@ class ClientController extends Controller
         if ($request->has('AddressType') && $request->has('Address')) {
             foreach ($request->AddressType as $key => $addressType) {
                 if (!empty($addressType) && !empty($request->Address[$key])) {
-                    Address::whereId($id)->update(
-                        ['CompanyId' => $client->id, 'AddressType' => $addressType],
-                        ['Address' => $request->Address[$key]]
-                    );
+                    $addressId = $request->AddressId[$key] ?? null;  // Get the address ID if available
+        
+                    if ($addressId) {
+                        $address = Address::where('CompanyId', $client->id)
+                                          ->where('id', $addressId)
+                                          ->first();
+                        if ($address) {
+                            // Update the existing address record
+                            $address->update([
+                                'AddressType' => $addressType,
+                                'Address' => $request->Address[$key]
+                            ]);
+                        }
+                    } else {
+                        // Create a new address record
+                        Address::create([
+                            'CompanyId' => $client->id,
+                            'AddressType' => $addressType,
+                            'Address' => $request->Address[$key]
+                        ]);
+                    }
                 }
             }
         }
@@ -332,9 +349,35 @@ class ClientController extends Controller
         if ($request->has('ContactName')) {
             foreach ($request->ContactName as $key => $contact_name) {
                 if (!empty($contact_name)) {
-                    Contact::updateOrCreate(
-                        ['CompanyId' => $client->id, 'ContactName' => $contact_name],
-                        [
+                    $contactId = $request->ContactId[$key] ?? null;  // Get the contact ID if available
+        
+                    if ($contactId) {
+                        $contact = Contact::where('CompanyId', $client->id)
+                                          ->where('id', $contactId)
+                                          ->first();
+                        if ($contact) {
+                            // Update the existing contact record
+                            $contact->update([
+                                'ContactName' => $contact_name,
+                                'Designation' => $request->Designation[$key] ?? null,
+                                'PrimaryTelephone' => $request->PrimaryTelephone[$key] ?? null,
+                                'SecondaryTelephone' => $request->SecondaryTelephone[$key] ?? null,
+                                'PrimaryMobile' => $request->PrimaryMobile[$key] ?? null,
+                                'SecondaryMobile' => $request->SecondaryMobile[$key] ?? null,
+                                'EmailAddress' => $request->EmailAddress[$key] ?? null,
+                                'Skype' => $request->Skype[$key] ?? null,
+                                'Viber' => $request->Viber[$key] ?? null,
+                                'Facebook' => $request->Facebook[$key] ?? null,
+                                'WhatsApp' => $request->WhatsApp[$key] ?? null,
+                                'LinkedIn' => $request->LinkedIn[$key] ?? null,
+                                'Birthday' => $request->Birthday[$key] ?? null
+                            ]);
+                        }
+                    } else {
+                        // Create a new contact record
+                        Contact::create([
+                            'CompanyId' => $client->id,
+                            'ContactName' => $contact_name,
                             'Designation' => $request->Designation[$key] ?? null,
                             'PrimaryTelephone' => $request->PrimaryTelephone[$key] ?? null,
                             'SecondaryTelephone' => $request->SecondaryTelephone[$key] ?? null,
@@ -347,12 +390,12 @@ class ClientController extends Controller
                             'WhatsApp' => $request->WhatsApp[$key] ?? null,
                             'LinkedIn' => $request->LinkedIn[$key] ?? null,
                             'Birthday' => $request->Birthday[$key] ?? null
-                        ]
-                    );
+                        ]);
+                    }
                 }
             }
         }
-
+        
         if ($request->hasFile('Path')) {
             foreach ($request->file('Path') as $key => $file) {
                 // Generate a unique filename
@@ -360,25 +403,31 @@ class ClientController extends Controller
                 
                 // Store the file
                 $storedPath = $file->storeAs('uploads', $fileName, 'public');
-        
+                
+                // Get the corresponding file ID
+                $fileId = $request->input('fileId')[$key]; // Ensure the key matches the input name in the HTML
+                
                 // Check if the file already exists for the client
                 $existingFile = FileClient::where('ClientId', $client->id)
-                                          ->where('FileName', $request->FileName[$key])
+                                          ->where('id', $fileId)
                                           ->first();
-        
+                
                 if ($existingFile) {
                     // Update the existing file's path
-                    $existingFile->update(['Path' => $storedPath]);
+                    $existingFile->update([
+                        'Path' => $storedPath,
+                        'FileName' => $request->input('FileName')[$key] // Update the file name as well
+                    ]);
                 } else {
                     // Create a new file record
                     FileClient::create([
                         'ClientId' => $client->id,
-                        'FileName' => $request->FileName[$key],
+                        'FileName' => $request->input('FileName')[$key],
                         'Path' => $storedPath
                     ]);
                 }
             }
-        }
+        }                  
 
         return response()->json(['success' => 'Data is Successfully Updated.']);
     }

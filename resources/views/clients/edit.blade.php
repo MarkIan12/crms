@@ -206,6 +206,7 @@
                                                     <td><a style="padding: 10px 20px" href="javascript:;" class="btn btn-danger deleteRow">-</a></td>
                                                     <td><input type="text" name="AddressType[]" class="form-control adjust" value="{{ $address->AddressType }}" placeholder="Enter Address Type"></td>
                                                     <td><input type="text" name="Address[]" class="form-control adjust" value="{{ $address->Address }}" placeholder="Enter Address"></td>
+                                                    <input type="hidden" name="AddressId[]" value="{{ $address->id }}">
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -214,8 +215,8 @@
                             </div>
                         </div>
                         <div id="step2" class="tab-pane fade" role="tabpanel">
-                            <div class="row form-group-container">
-                                @foreach($contacts as $contact)
+                            @foreach($contacts as $contact)
+                                <div class="row form-group-container">
                                     <div class="col-lg-12">
                                         <button type="button" class="btn btn-danger deleteRowBtn" hidden style="float: right;">Delete Row</button>
                                     </div>
@@ -223,6 +224,7 @@
                                         <div class="form-group">
                                             <label>Contact Name</label>
                                             <input type="text" class="form-control" name="ContactName[]" placeholder="Enter Contact Name" value="{{ $contact->ContactName }}" required>
+                                            <input type="hidden" name="ContactId[]" value="{{ $contact->id }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -294,11 +296,11 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>LinkedIn</label>
-                                            <input type="text" class="form-control" id="LinkedIn" name="LinkedIn[]" value="{{ $contact->LinkedIn     }}" placeholder="Enter LinkedIn">
+                                            <input type="text" class="form-control" id="LinkedIn" name="LinkedIn[]" value="{{ $contact->LinkedIn }}" placeholder="Enter LinkedIn">
                                         </div>
                                     </div>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                             <button type="button" class="btn btn-primary" id="addRowBtn">Add Row</button>
                         </div>
                         <div id="step3" class="tab-pane fade" role="tabpanel">
@@ -317,6 +319,7 @@
                                                 <td><a style="padding: 10px 20px" href="javascript:;" class="btn btn-danger file_deleteRow">-</a></td>
                                                 <td><input type="text" name="FileName[]" class="form-control adjust" placeholder="Enter File Name" value="{{ $file->FileName }}"></td>
                                                 <td>
+                                                    <input type="hidden" name="fileId[]" value="{{ $file->id }}">
                                                     <input type="file" name="Path[]" class="form-control adjust">
                                                     @if($file->Path)
                                                         <p>Current file: <a href="{{ asset('storage/' . $file->Path) }}" target="_blank">{{ basename($file->Path) }}</a></p>
@@ -370,16 +373,92 @@
 
         // Add function of client contacts
         $('#addRowBtn').click(function() {
-            var newRow = $('.form-group-container').first().clone();
-            
-            newRow.find('input').each(function() {
-                $(this).val('');
-            });
-        
+            var newRow = $('<div class="row form-group-container">' +
+                '<div class="col-lg-12">' +
+                    '<button type="button" class="btn btn-danger deleteRowBtn" style="float: right;">Delete Row</button>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Contact Name</label>' +
+                        '<input type="text" class="form-control" name="ContactName[]" placeholder="Enter Contact Name" required>' +
+                        '<input type="hidden" name="ContactId[]">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Designation</label>' +
+                        '<input type="text" class="form-control" name="Designation[]" placeholder="Enter Designation">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Birthday</label>' +
+                        '<input type="date" class="form-control" name="Birthday[]" placeholder="Enter Birthday">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Email Address</label>' +
+                        '<input type="text" class="form-control" name="EmailAddress[]" placeholder="Enter Email Address">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Telephone</label>' +
+                        '<input type="text" class="form-control" name="PrimaryTelephone[]" placeholder="Enter Primary Telephone">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Telephone</label>' +
+                        '<input type="text" class="form-control" name="SecondaryTelephone[]" placeholder="Enter Secondary Telephone">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Mobile</label>' +
+                        '<input type="text" class="form-control" name="PrimaryMobile[]" placeholder="Enter Primary Mobile">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Mobile</label>' +
+                        '<input type="text" class="form-control" name="SecondaryMobile[]" placeholder="Enter Secondary Mobile">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Skype</label>' +
+                        '<input type="text" class="form-control" name="Skype[]" placeholder="Enter Skype">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Viber</label>' +
+                        '<input type="text" class="form-control" name="Viber[]" placeholder="Enter Viber">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>WhatsApp</label>' +
+                        '<input type="text" class="form-control" name="WhatsApp[]" placeholder="Enter WhatsApp">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>Facebook</label>' +
+                        '<input type="text" class="form-control" name="Facebook[]" placeholder="Enter Facebook">' +
+                    '</div>' +
+                '</div>' +
+                '<div class="col-lg-6">' +
+                    '<div class="form-group">' +
+                        '<label>LinkedIn</label>' +
+                        '<input type="text" class="form-control" name="LinkedIn[]" placeholder="Enter LinkedIn">' +
+                    '</div>' +
+                '</div>' +
+            '</div>');
+
             newRow.insertBefore('#addRowBtn');
-            
-            // Show delete button for the new row
-            newRow.find('.deleteRowBtn').removeAttr('hidden');
             
             // Attach the delete event to the new row's delete button
             newRow.find('.deleteRowBtn').click(function() {
@@ -387,20 +466,28 @@
             });
         });
 
-        // Add new file row
-        $('#table_files thead').on('click', '.file_addRow', function(){
+        // Attach delete event to existing rows
+        $('.deleteRowBtn').click(function() {
+            $(this).closest('.form-group-container').remove();
+        });
+
+         // Add file row
+        $('#table_files thead').on('click', '.file_addRow', function() {
             var tr = '<tr>' +
-                '<td><a style="padding: 10px 20px" href="javascript:;" class="btn btn-danger deleteRow">-</a></td>'+
-                '<td><input type="text" name="FileName[]" class="form-control adjust" placeholder="Enter File Name"></td>'+
-                '<td><input type="file" name="Path[]" class="form-control adjust"></td>'+
+                '<td><a style="padding: 10px 20px" href="javascript:;" class="btn btn-danger file_deleteRow">-</a></td>' +
+                '<td><input type="text" name="FileName[]" class="form-control adjust" placeholder="Enter File Name"></td>' +
+                '<td>' +
+                    '<input type="hidden" name="fileId[]" value="">' + // Empty value for new rows
+                    '<input type="file" name="Path[]" class="form-control adjust">' +
+                '</td>' +
             '</tr>';
 
-            $('tbody').append(tr);
+            $('#table_files tbody').append(tr);
         });
 
         // Delete file row
-        $('#table_files tbody').on('click', '.file_deleteRow', function(){
-            $(this).parent().parent().remove();
+        $('#table_files tbody').on('click', '.file_deleteRow', function() {
+            $(this).closest('tr').remove();
         });
 
         // Navigation through steps
