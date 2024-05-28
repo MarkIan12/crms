@@ -52,16 +52,19 @@
                     name: 'due_date'
                 },
                 {
-                    data: 'client_id',
-                    name: 'client_id'
+                    data: 'client.Name',
+                    name: 'client.Name'
                 },
                 {
-                    data: 'application_id',
-                    name: 'application_id'
+                    data: 'product_application.Name',
+                    name: 'product_application.Name'
                 },
                 {
                     data: 'status',
-                    name: 'status'
+                    name: 'status',
+                    render: function(data, type, row) {
+                        return data == 10 ? 'Open' : 'Closed';
+                    }
                 },
                 {
                     data: 'progress',
@@ -71,6 +74,14 @@
                     data: 'action',
                     name: 'action',
                     orderable: false
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [0, 1, 2, 3,], // Target column
+                    render: function(data, type, row) {
+                        return '<div style="white-space: break-spaces; width: 100%;">' + data + '</div>';
+                    }
                 }
             ]
         });
