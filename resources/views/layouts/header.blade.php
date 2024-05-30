@@ -196,7 +196,7 @@
                         <div class="collapse" id="table_service">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="{{ url('/customer_complaint') }}">Customer Complaints</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="">Customer Feedbacks</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{ url('/customer_feedback') }}">Customer Feedbacks</a></li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="javascript:void(0);" data-target="#table_service2" aria-expanded="false" aria-controls="table_service2" onclick="toggleSetupService(event)">
                                         <span class="menu-title">Setup</span>
