@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerFeedbackController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,9 +49,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('delete_department/{id}', 'DepartmentController@delete')->name('delete_department');
 
     // Product
-    Route::get('/products', 'ProductController@index')->name('product.index');
+    Route::get('/current_products', 'ProductController@current')->name('product.current');
+    Route::get('/new_products', 'ProductController@new')->name('product.new');
     Route::get('/draft_products', 'ProductController@draft')->name('product.draft');
     Route::get('/archived_products', 'ProductController@archived')->name('product.archived');
+    Route::post('/new_product', 'ProductController@store')->name('product.store');
+    Route::get('/edit_product/{id}', 'ProductController@edit')->name('edit_product');
+    Route::post('update_product/{id}', 'ProductController@update')->name('update_product');
+    Route::get('view_product/{id}', 'ProductController@view')->name('product.view');
+    Route::get('delete_product/{id}', 'ProductController@delete')->name('delete_product');
 
     // Client
     Route::get('/client', 'ClientController@index')->name('client.index');
@@ -64,9 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('update_client/{id}', 'ClientController@update')->name('update_client');
     Route::get('view_client/{id}', 'ClientController@view')->name('client.view');
 
-
     // Customer Requirement
     Route::get('/customer_requirement', 'CustomerRequirementController@index')->name('customer_requirement.index');
+    Route::get('customer_requirement/create', 'CustomerRequirementController@create'); 
 
     // Product Evaluation
     Route::get('/product_evaluation', 'ProductEvaluationController@index')->name('product_evaluation.index');
@@ -79,16 +84,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Customer Complaint 
     Route::get('/customer_complaint', 'CustomerComplaintController@index')->name('customer_complaint.index');
-    // Customer Feedback 
-    Route::get('/customer_feedback', 'CustomerFeedbackController@index')->name('customer_feedback.index');
-    Route::post('/new_customer_feedback', 'CustomerFeedbackController@store')->name('customer_feedback.store');
-    Route::get('customer_feedback/{id}/edit', 'CustomerFeedbackController@edit');
-    Route::put('customer_feedback/{id}', 'CustomerFeedbackController@update');
-    Route::get('/customer-feedback/view/{id}', 'CustomerFeedbackController@view')->name('customer-feedback.view');
-    Route::delete('delete_feedback/{id}', 'CustomerFeedbackController@destroy')->name('customer-feedback.destroy');
-
-    Route::get('contacts-by-client-f/{clientId}', [CustomerFeedbackController::class, 'getContactsByClientF']);
-    Route::get('get-last-increment-f/{year}/{clientCode}', [CustomerFeedbackController::class, 'getLastIncrementF']);
 
     // Nature of Request
     Route::get('/nature_request', 'NatureRequestController@index')->name('nature_request.index');

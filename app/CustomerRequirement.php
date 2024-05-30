@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerRequirement extends Model
 {
     use SoftDeletes;
-    protected $table = "customer_requirements";
+    protected $table = "customerrequirements";
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'ClientId', 'id');
     }
 
     public function product_application() 
     {
-        return $this->belongsTo(ProductApplication::class, 'application_id', 'id');
+        return $this->belongsTo(ProductApplication::class, 'ApplicationId', 'id');
     }
 }

@@ -23,6 +23,7 @@ class CustomerFeedbackController extends Controller
         $departments = ConcernDepartment::all();        
        
         $customerFeedbacks = CustomerFeedback::with(['client', 'contacts','departments'])->where('ServiceNumber', 'like', 'FBK%')->get();
+        
         if(request()->ajax())
         {
             return datatables()->of($customerFeedbacks)
@@ -125,13 +126,12 @@ class CustomerFeedbackController extends Controller
 
         ]);
         CustomerFeedback::whereId($id)->update([
-                'Title' => $validatedData['TitleEdit'],
-                'ClientContactId' => $validatedData['ClientContactIdEdit'],
-                'ConcernedDepartmentId' => $validatedData['ConcernedDepratmentEdit'],
-                'Description' => $validatedData['DescriptionEdit'],
-                // 'Classification' => $validatedData['CLassificationEdit'],
-
-            ]);
+            'Title' => $validatedData['TitleEdit'],
+            'ClientContactId' => $validatedData['ClientContactIdEdit'],
+            'ConcernedDepartmentId' => $validatedData['ConcernedDepratmentEdit'],
+            'Description' => $validatedData['DescriptionEdit'],
+            // 'Classification' => $validatedData['CLassificationEdit'],
+        ]);
         return response()->json(['success' => true]);
     }
     public function destroy($id)

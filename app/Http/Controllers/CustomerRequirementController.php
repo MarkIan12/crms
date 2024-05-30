@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\CustomerRequirement;
 use App\Client;
+use App\User;
+use App\PriceCurrency;
+use App\NatureRequest;
 use App\ProductApplication;
 use Illuminate\Http\Request;
 
@@ -15,6 +18,9 @@ class CustomerRequirementController extends Controller
         // dd($customer_requirement);
         $product_applications = ProductApplication::all();
         $clients = Client::all();
+        $users = User::all();
+        $price_currencies = PriceCurrency::all();
+        $nature_requests = NatureRequest::all();
         if(request()->ajax())
         
         {
@@ -28,6 +34,6 @@ class CustomerRequirementController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('customer_requirements.index', compact('customer_requirements', 'clients', 'product_applications')); 
+        return view('customer_requirements.index', compact('customer_requirements', 'clients', 'product_applications', 'users', 'price_currencies', 'nature_requests')); 
     }
 }
