@@ -4,7 +4,6 @@
     #form_product {
         padding: 20px 20px;
     }
-    
     #productTab .nav-link {
         padding: 15px;
     }
@@ -27,105 +26,111 @@
                     <h4 class="card-title d-flex justify-content-between align-items-center" style="margin-top: 10px">View Product Details</h4>
                 </div>
                 <div class="col-lg-6" align="right">
-                    <a href="{{ url('/customer_feedback') }}" class="btn btn-md btn-light"><i class="icon-arrow-left"></i>&nbsp;Back</a>
+                    <a href="{{ url('/customer_complaint') }}" class="btn btn-md btn-light"><i class="icon-arrow-left"></i>&nbsp;Back</a>
                 </div>
             </div>
             <form class="form-horizontal" id="form_product" enctype="multipart/form-data">
                 <div class="group-form">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Type:</b></label>
-                    <label class="col-sm-3 col-form-label">@if($customerFeedback->Type == 30)
-                        Customer Feedback
+                    <label class="col-sm-3 col-form-label">@if($CustomerComplaint->Type == 20)
+                        Customer Complaint
                     @endif</label>
-                    <label class="offset-sm-2 col-sm-2 col-form-label"><b>Classification:</b></label>
-                    <label class="col-sm-2 col-form-label">@if($customerFeedback->Classification == 10)
-                        Positive
-                    @else
-                        Negative
-                    @endif</label>
+                    <label class="offset-sm-2 col-sm-2 col-form-label"><b>Issue Category:</b></label>
+                    <label class="col-sm-2 col-form-label">{{ $CustomerComplaint->categories->IssueCategoryId }}</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>#:</b></label>
-                    <label class="col-sm-3 col-form-label">{{ $customerFeedback->ServiceNumber  }}</label>
-                    <label class="offset-sm-2 col-sm-2 col-form-label"><b>Etc:</b></label>
-                    <label class="col-sm-2 col-form-label"></label>
+                    <label class="col-sm-3 col-form-label">{{ $CustomerComplaint->ServiceNumber  }}</label>
+                    <label class="offset-sm-2 col-sm-2 col-form-label"><b>Severity:</b></label>
+                    <label class="col-sm-2 col-form-label"> @if($CustomerComplaint->Severity == 10)
+                        Minor
+                        @elseif($CustomerComplaint->Severity == 20)
+                        Minor
+                        @elseif($CustomerComplaint->Severity == 30)
+                        Critical
+                    @endif</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Date Received:</b></label>
-                    <label class="col-sm-3 col-form-label">{{ $customerFeedback->DateReceived  }}</label>
+                    <label class="col-sm-3 col-form-label">{{ $CustomerComplaint->DateReceived  }}</label>
+                    <label class="offset-sm-2 col-sm-2 col-form-label"><b>Etc:</b></label>
+                    <label class="col-sm-2 col-form-label">{{ $CustomerComplaint->Etc  }}</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Received By:</b></label>
-                    <label class="col-sm-3 col-form-label"></label>
+                    <label class="col-sm-9 col-form-label"></label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"><b>Concerned Department:</b></label>
+                    <label class="col-sm-3 col-form-label">{{ $CustomerComplaint->departments->Name }}</label>
                     <label class="offset-sm-2 col-sm-2 col-form-label"><b>Status:</b></label>
-                    <label class="col-sm-2 col-form-label">@if($customerFeedback->Status == 10)
+                    <label class="col-sm-2 col-form-label">@if($CustomerComplaint->Status == 10)
                         Open
                     @else
                         Closed
                     @endif
+                    </label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b></b></label>
                     <label class="col-sm-3 col-form-label"></label>
                     <label class="offset-sm-2 col-sm-2 col-form-label"><b>Date Closed:</b></label>
-                    <label class="col-sm-2 col-form-label">{{ $customerFeedback->DateClosed  }}</label>
+                    <label class="col-sm-2 col-form-label">{{ $CustomerComplaint->DateClosed  }}</label>
                 </div>
             </div>
             <div class="group-form">
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"><b>Concerned Department:</b></label>
-                    <label class="col-sm-3 col-form-label">{{ $customerFeedback->departments->Name }}</label>
-                </div>
+                
               
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Client:</b></label>
-                    <label class="col-sm-3 col-form-label">{{ $customerFeedback->client->Name }}</label>
+                    <label class="col-sm-3 col-form-label">{{ $CustomerComplaint->client->Name }}</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Contact:</b></label>
-                    <label class="col-sm-3 col-form-label">{{ $customerFeedback->contacts->ContactName }}</label>
+                    <label class="col-sm-3 col-form-label">{{ $CustomerComplaint->contacts->ContactName }}</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Telephone:</b></label>
                     <label class="col-sm-3 col-form-label"> 
-                        @if(!empty($customerFeedback->contacts->PrimaryTelephone))
-                        {{ $customerFeedback->contacts->PrimaryTelephone }}
-                        @elseif(!empty($customerFeedback->contacts->SecondaryTelephone))
-                        {{ $customerFeedback->contacts->SecondaryTelephone }}
+                        @if(!empty($CustomerComplaint->contacts->PrimaryTelephone))
+                        {{ $CustomerComplaint->contacts->PrimaryTelephone }}
+                        @elseif(!empty($CustomerComplaint->contacts->SecondaryTelephone))
+                        {{ $CustomerComplaint->contacts->SecondaryTelephone }}
                     @endif</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Mobile:</b></label>
                     <label class="col-sm-3 col-form-label"> 
-                        @if(!empty($customerFeedback->contacts->PrimaryMobile))
-                        {{ $customerFeedback->contacts->PrimaryMobile }}
-                        @elseif(!empty($customerFeedback->contacts->SecondaryMobile))
-                        {{ $customerFeedback->contacts->SecondaryMobile }}
+                        @if(!empty($CustomerComplaint->contacts->PrimaryMobile))
+                        {{ $CustomerComplaint->contacts->PrimaryMobile }}
+                        @elseif(!empty($CustomerComplaint->contacts->SecondaryMobile))
+                        {{ $CustomerComplaint->contacts->SecondaryMobile }}
                     @endif</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Email:</b></label>
-                    <label class="col-sm-3 col-form-label">{{ $customerFeedback->contacts->EmailAddress }}</label>
+                    <label class="col-sm-3 col-form-label">{{ $CustomerComplaint->contacts->EmailAddress }}</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Contact Skype:</b></label>
-                    <label class="col-sm-3 col-form-label">{{ $customerFeedback->contacts->Skype }}</label>
+                    <label class="col-sm-3 col-form-label">{{ $CustomerComplaint->contacts->Skype }}</label>
                 </div>
             </div>
             <div class="group-form">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Title:</b></label>
-                    <label class="col-sm-10 col-form-label">{{ $customerFeedback->Title}}</label>
+                    <label class="col-sm-10 col-form-label">{{ $CustomerComplaint->Title}}</label>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"><b>Description:</b></label>
-                    <p class="col-sm-10 col-form-label">{{ $customerFeedback->Description}}</label>
+                    <p class="col-sm-10 col-form-label">{{ $CustomerComplaint->Description}}</p>
                 </div>
             </div>
             <div class="group-form">
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"><b>Response:</b></label>
-                    <p class="col-sm-10 col-form-label">{{ $customerFeedback->Response}}</label>
+                    <label class="col-sm-2 col-form-label"><b>Corrective Action:</b></label>
+                    <p class="col-sm-10 col-form-label">{{ $CustomerComplaint->Response}}</label>
                 </div>
             </div>
             </form>          

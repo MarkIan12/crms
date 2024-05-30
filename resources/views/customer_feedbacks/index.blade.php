@@ -195,22 +195,23 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
 
 <script>
-    $(document).ready(function() {
-        $(document).on('click', '.view', function() {
-            var url = $(this).data('url');
-            window.location.href = url;
-        });
-    });
-    
-    function generateUniqueId() {
-        const clientSelect = document.getElementById('ClientId');
-        const clientId = clientSelect.value;
-        const clientType = clientSelect.options[clientSelect.selectedIndex].getAttribute('data-type');
-        const dateReceived = document.getElementById('DateReceived').value;
-        const year = new Date(dateReceived).getFullYear().toString().slice(-2);
-        let clientCode = clientType == 1 ? 'LS' : 'IS';
 
-        fetch(`get-last-increment-f/${year}/${clientCode}`)
+        $(document).ready(function() {
+            $(document).on('click', '.view', function() {
+                var url = $(this).data('url');
+                window.location.href = url;
+            });
+        });
+// May 29 2024 Jun Jihad Barroga Generate ServiceNumber 
+    function generateUniqueId() {
+    const clientSelect = document.getElementById('ClientId');
+    const clientId = clientSelect.value;
+    const clientType = clientSelect.options[clientSelect.selectedIndex].getAttribute('data-type');
+    const dateReceived = document.getElementById('DateReceived').value;
+    const year = new Date(dateReceived).getFullYear().toString().slice(-2);
+    let clientCode = clientType == 1 ? 'LS' : 'IS';
+
+    fetch(`get-last-increment-f/${year}/${clientCode}`)
         .then(response => response.json())
         .then(data => {
             const lastIncrement = data.lastIncrement;
@@ -218,9 +219,12 @@
             const uniqueId = `FBK-${clientCode}-${year}-${increment}`;
             document.getElementById('UniqueID').value = uniqueId;
         });
-    }
+}
 
-    document.getElementById('DateReceived').addEventListener('change', generateUniqueId); 
+    document.getElementById('DateReceived').addEventListener('change', generateUniqueId);
+    // May 29 2024 Jun Jihad Barroga Generate ServiceNumber 
+
+    // May 28 2024 Jun Jihad Barroga Contact is Dependednt To CLient Function 
     $(document).ready(function() {
         $('#ClientId').on('change', function() {
             var clientId = $(this).val();
@@ -242,6 +246,8 @@
             }
         });
     });
+
+    // May 28 2024 Jun Jihad Barroga Contact is Dependednt To CLient Function 
 
     $(document).ready(function(){
         $('#customer_feedback_table').DataTable({
@@ -286,7 +292,6 @@
                 }
             ]
         });
-
         $('#customer_feedback_table').on('click', '.edit', function() {
         var id = $(this).attr('id');
         editCustomerFeedback(id);
@@ -294,34 +299,38 @@
 
 
     $(document).on('click', '.delete', function(){
-        var id = $(this).attr('id');
-        console.log(id)
-        $('#confirmDeleteModal').modal('show');
-            $('#confirmDeleteBtn').click(function(){
-                $.ajax({
-                    url: 'delete_feedback/' + id,
-                    type: 'DELETE',
-                    dataType: 'json',
-                    data: {
-                        "Id": id,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success: function (data) {
-                        $('#confirmDeleteModal').modal('hide');
-                        $('#customer_feedback_table').DataTable().ajax.reload();
-                    },
-                    error: function (data) {
-                        console.log('Error:', data);
-                    }
-                });
-            });
+    var id = $(this).attr('id');
+    console.log(id)
+    $('#confirmDeleteModal').modal('show');
+    $('#confirmDeleteBtn').click(function(){
+        $.ajax({
+            url: 'delete_feedback/' + id,
+            type: 'DELETE',
+            dataType: 'json',
+            data: {
+                "Id": id,
+                "_token": "{{ csrf_token() }}"
+            },
+            success: function (data) {
+                $('#confirmDeleteModal').modal('hide');
+                $('#customer_feedback_table').DataTable().ajax.reload();
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
         });
     });
+});
 
-    $('#add_customer_feedback').click(function(){
-        $('#formCustomerFeedback').modal('show');
-        $('.modal-title').text("Add Customer Feedback");
+
     });
+
+    // May 28 2024 Jun Jihad Barroga SHow Modal For Create 
+    $('#add_customer_feedback').click(function(){
+            $('#formCustomerFeedback').modal('show');
+            $('.modal-title').text("Add Customer Feedback");
+        });
+    // May 28 2024 Jun Jihad Barroga SHow Modal For Create 
 
     function editCustomerFeedback(id) {
     $.ajax({
@@ -356,6 +365,8 @@
         }
     });
 }
+
+
 
 </script>
 @endsection

@@ -1,5 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerComplaintController;
+use App\Http\Controllers\CustomerFeedbackController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,6 +86,25 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Customer Complaint 
     Route::get('/customer_complaint', 'CustomerComplaintController@index')->name('customer_complaint.index');
+    Route::post('/new_customer_complaint', 'CustomerComplaintController@store')->name('customer_complaint.store');
+    Route::get('customer_complaint/{id}/edit', 'CustomerComplaintController@edit');
+    Route::put('customer_complaint/{id}', 'CustomerComplaintController@update');
+    Route::get('/customer-complaint/view/{id}', 'CustomerComplaintController@view')->name('customer_complaint.view');
+    Route::delete('delete_complaint/{id}', 'CustomerComplaintController@destroy')->name('customer_complaint.destroy');
+
+    Route::get('contacts-by-client/{clientId}', [CustomerComplaintController::class, 'getContactsByClient']);
+    Route::get('get-last-increment/{year}/{clientCode}', [CustomerComplaintController::class, 'getLastIncrement']);
+    
+     // Customer Feedback 
+     Route::get('/customer_feedback', 'CustomerFeedbackController@index')->name('customer_feedback.index');
+     Route::post('/new_customer_feedback', 'CustomerFeedbackController@store')->name('customer_feedback.store');
+     Route::get('customer_feedback/{id}/edit', 'CustomerFeedbackController@edit');
+     Route::put('customer_feedback/{id}', 'CustomerFeedbackController@update');
+     Route::get('/customer-feedback/view/{id}', 'CustomerFeedbackController@view')->name('customer-feedback.view');
+     Route::delete('delete_feedback/{id}', 'CustomerFeedbackController@destroy')->name('customer-feedback.destroy');
+
+     Route::get('contacts-by-client-f/{clientId}', [CustomerFeedbackController::class, 'getContactsByClientF']);
+     Route::get('get-last-increment-f/{year}/{clientCode}', [CustomerFeedbackController::class, 'getLastIncrementF']);
 
     // Nature of Request
     Route::get('/nature_request', 'NatureRequestController@index')->name('nature_request.index');
