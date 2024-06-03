@@ -162,9 +162,9 @@
             if($('#action').val() == 'Edit')
             {
                 var formData = new FormData(this);
-                formData.append('Id', $('#hidden_id').val());
+                formData.append('id', $('#hidden_id').val());
                 $.ajax({
-                    url: "{{ route('update_country', ':Id') }}".replace(':Id', $('#hidden_id').val()),
+                    url: "{{ route('update_country', ':id') }}".replace(':id', $('#hidden_id').val()),
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -202,15 +202,15 @@
         });
 
         $(document).on('click', '.edit', function(){
-            var id = $(this).attr('Id');
+            var id = $(this).attr('id');
             $('#form_result').html('');
             $.ajax({
-                url: "{{ route('edit_country', ['Id' => '_id_']) }}".replace('_id_', id),
+                url: "{{ route('edit_country', ['id' => '_id_']) }}".replace('_id_', id),
                 dataType: "json",
                 success: function(html){
                     $('#Name').val(html.data.Name);
                     $('#Description').val(html.data.Description);
-                    $('#hidden_id').val(html.data.Id);
+                    $('#hidden_id').val(html.data.id);
                     $('.modal-title').text("Edit Country");
                     $('#action_button').val("Update");
                     $('#action').val("Edit");
@@ -222,7 +222,7 @@
 
         var country_id;
         $(document).on('click', '.delete', function(){
-            country_id = $(this).attr('Id');
+            country_id = $(this).attr('id');
             $('#confirmModal').modal('show');
             $('.modal-title').text("Delete Country");
         });    

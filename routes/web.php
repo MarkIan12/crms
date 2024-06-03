@@ -75,7 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Customer Requirement
     Route::get('/customer_requirement', 'CustomerRequirementController@index')->name('customer_requirement.index');
-    Route::get('customer_requirement/create', 'CustomerRequirementController@create'); 
+    Route::post('/new_customer_requirement', 'CustomerRequirementController@store')->name('customer_requirement.store');
 
     // Product Evaluation
     Route::get('/product_evaluation', 'ProductEvaluationController@index')->name('product_evaluation.index');
@@ -231,7 +231,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/new_payment_terms', 'PaymentTermsController@store')->name('payment_terms.store');
     Route::get('/edit_payment_terms/{id}', 'PaymentTermsController@edit')->name('edit_payment_terms');
     Route::post('/update_payment_terms/{id}', 'PaymentTermsController@update')->name('update_payment_terms');
-    Route::get('delete_payment_terms/{Id}', 'PaymentTermsController@delete')->name('delete_payment_terms');
+    Route::get('delete_payment_terms/{id}', 'PaymentTermsController@delete')->name('delete_payment_terms');
 
     // Request GAE
     Route::get('/request_gae', 'RequestGAEController@index')->name('request_gae.index');

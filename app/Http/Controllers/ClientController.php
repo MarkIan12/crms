@@ -25,7 +25,7 @@ class ClientController extends Controller
         {
             return datatables()->of($clients)
                     ->addColumn('action', function ($data) {
-                        $viewButton = '<button type="button" name="view" id="' . $data->id . '" class="view btn btn-success">View</button>';
+                        $viewButton = '<a type="button" href="' . route("client.view", ["id" => $data->id]) . '" name="view" id="' . $data->id . '" class="edit btn btn-success">View</a>';
                         $editButton = '<a type="button" href="' . route("client.edit", ["id" => $data->id]) . '" name="edit" id="' . $data->id . '" class="edit btn btn-primary">Edit</a>';
                         return $viewButton . '&nbsp;&nbsp;' . $editButton;
                     })
