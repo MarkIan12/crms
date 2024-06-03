@@ -8,4 +8,38 @@ class SampleRequest extends Model
 {
     use SoftDeletes;
     protected $table = "samplerequests";
+
+    protected $fillable = [
+        'SrfNumber', 
+        'DateRequested',
+        'DateRequired',
+        'DateStarted',
+        'PrimarySalesPersonId',
+        'SecondarySalesPersonId',
+        'SoNumber',
+        'RefCode',
+        'Status',
+        'SrfType',
+        'ClientId',
+        'ContactId',
+        'InternalRemarks',
+        'Courier',
+        'AwbNumber',
+        'DateDispatched',
+        'DateSampleReceived',
+        'DeliveryRemarks',
+        'Note'
+
+        
+    ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'ClientId');
+    }
+
+    public function applications()
+    {
+        return $this->belongsTo(ProductApplication::class, 'ApplicationId');
+    }
 }

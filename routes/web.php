@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerComplaintController;
 use App\Http\Controllers\CustomerFeedbackController;
+use App\Http\Controllers\SampleRequestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,7 +82,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Sample Request 
     Route::get('/sample_request', 'SampleRequestController@index')->name('sample_request.index');
+    Route::post('/new_sample_request', 'SampleRequestController@store')->name('sample_request.store');
 
+    Route::get('sample_contacts-by-client-f/{clientId}', [SampleRequestController::class, 'getSampleContactsByClientF']);
+    Route::get('sample_get-last-increment-f/{year}/{clientCode}', [SampleRequestController::class, 'getSampleLastIncrementF']);
+    
     // Price Monitoring 
     Route::get('/price_monitoring', 'PriceMonitoringController@index')->name('price_monitoring.index');
 
