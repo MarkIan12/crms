@@ -14,12 +14,12 @@ class CurrencyExchange extends Model
 
     public function fromCurrency()
     {
-        return $this->belongsTo(PriceCurrency::class, 'FromCurrencyId', 'Id');
+        return $this->belongsTo(PriceCurrency::class, 'FromCurrencyId', 'id');
     }
 
     public function toCurrency()
     {
-        return $this->belongsTo(PriceCurrency::class, 'ToCurrencyId', 'Id');
+        return $this->belongsTo(PriceCurrency::class, 'ToCurrencyId', 'id');
     }
 
 }

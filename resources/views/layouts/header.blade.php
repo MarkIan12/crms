@@ -314,11 +314,20 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/activities') }}">
-                            <i class="icon-paper menu-icon"></i>
-                            <span class="menu-title">Reports</span>
+                        <li class="nav-item"> 
+                            <a class="nav-link" data-toggle="collapse" href="#setup" aria-expanded="false" aria-controls="setup">
+                                <i class="icon-cog menu-icon"></i>
+                                <span class="menu-title">Reports</span>
+                                <i class="menu-arrow"></i>
                             </a>
+                            <div class="collapse" id="setup">
+                                <ul class="nav flex-column sub-menu">
+                                    <!-- <li class="nav-item"><a class="nav-link" href="{{ url('/user') }}">User Accounts</a></li> -->
+                                    <li class="nav-item"><a class="nav-link" href="">Roles</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="">Company</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="">Department</a></li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </nav>

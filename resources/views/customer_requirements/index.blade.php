@@ -44,7 +44,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="name">Date Created (DD/MM/YYYY) - Hour Minute</label>
-                                <input type="datetime-local" class="form-control" id="DateCreated" name="DateCreated">
+                                <input type="datetime-local" class="form-control" id="CreatedDate" name="CreatedDate">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -152,7 +152,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="name">Competitor</label>
-                                <input type="text" class="form-control" id="Competitor" name="Competitor" value="Enter Competitor">
+                                <input type="text" class="form-control" id="Competitor" name="Competitor" placeholder="Enter Competitor">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -163,15 +163,17 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="name">Nature of Request</label>
-                            <div class="input-group">
-                                <select class="form-control js-example-basic-single" id="inputGroupSelect04">
-                                    <option value="" disabled selected>Select Sales Person</option>
-                                    @foreach($nature_requests as $nature_request)
-                                        <option value="{{ $nature_request->id }}">{{ $nature_request->Name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-append">
-                                    <a href="javascript:;" class="btn btn-primary addRow">+</a>
+                            <div id="natureOfRequestContainer">
+                                <div class="input-group mb-3">
+                                    <select class="form-control js-example-basic-single" name="NatureOfRequestId[]">
+                                        <option value="" disabled selected>Select Nature of Request</option>
+                                        @foreach($nature_requests as $nature_request)
+                                            <option value="{{ $nature_request->id }}">{{ $nature_request->Name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary addRow">+</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -228,8 +230,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
 
+<style>
+    #natureOfRequestContainer .select2-container {
+        width: 360px !important;
+    }
+</style>
 <script>
     $(document).ready(function(){
+        $('.js-example-basic-single').select2();
+
         $('#customer_requirement_table').DataTable({
             processing: true,
             serverSide: true,
@@ -255,7 +264,10 @@
                 },
                 {
                     data: 'product_application.Name',
-                    name: 'product_application.Name'
+                    name: 'product_application.Name',
+                    render: function(data, type, row) {
+                        return '<div style="white-space: break-spaces; width: 100%;">' + (data ? data : 'N/A') + '</div>';
+                    }
                 },
                 {
                     data: 'Recommendation',
@@ -291,6 +303,27 @@
             ]
         });
 
+        $(document).on('click', '.addRow', function() {
+            var newRow = `
+                <div class="input-group mb-3">
+                    <select class="form-control js-example-basic-single" name="NatureOfRequestId[]">
+                        <option value="" disabled selected>Select Nature of Request</option>
+                        @foreach($nature_requests as $nature_request)
+                            <option value="{{ $nature_request->id }}">{{ $nature_request->Name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-danger removeRow">-</button>
+                    </div>
+                </div>`;
+            $('#natureOfRequestContainer').append(newRow);
+            $('.js-example-basic-single').select2(); // Reinitialize Select2 for new elements
+        });
+
+        $(document).on('click', '.removeRow', function() {
+            $(this).closest('.input-group').remove();
+        });
+
         $('#add_customer_requirement').click(function(){
             $('#formCustomerRequirement').modal('show');
             $('.modal-title').text("Add New Customer Requirement");
@@ -301,7 +334,7 @@
             if($('#action').val() == 'Save')
             {
                 $.ajax({
-                    url: "{{ route('crr_priority.store') }}",
+                    url: "{{ route('customer_requirement.store') }}",
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,

@@ -14,7 +14,7 @@ class Area extends Model
 
     public function region()
     {
-        return $this->belongsTo(Region::class, 'RegionId', 'Id');
+        return $this->belongsTo(Region::class, 'RegionId', 'id');
     }
 }
 

@@ -157,9 +157,9 @@
             if($('#action').val() == 'Edit')
             {
                 var formData = new FormData(this);
-                formData.append('Id', $('#hidden_id').val());
+                formData.append('id', $('#hidden_id').val());
                 $.ajax({
-                    url: "{{ route('update_business_type', ':Id') }}".replace(':Id', $('#hidden_id').val()),
+                    url: "{{ route('update_business_type', ':id') }}".replace(':id', $('#hidden_id').val()),
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -197,15 +197,15 @@
         });
 
         $(document).on('click', '.edit', function(){
-            var id = $(this).attr('Id');
+            var id = $(this).attr('id');
             $('#form_result').html('');
             $.ajax({
-                url: "{{ route('edit_business_type', ['Id' => '_id_']) }}".replace('_id_', id),
+                url: "{{ route('edit_business_type', ['id' => '_id_']) }}".replace('_id_', id),
                 dataType: "json",
                 success: function(html){
                     $('#Name').val(html.data.Name);
                     $('#Description').val(html.data.Description);
-                    $('#hidden_id').val(html.data.Id);
+                    $('#hidden_id').val(html.data.id);
                     $('.modal-title').text("Edit Business Type");
                     $('#action_button').val("Update");
                     $('#action').val("Edit");
@@ -216,7 +216,7 @@
 
         var business_type_id;
         $(document).on('click', '.delete', function(){
-            business_type_id = $(this).attr('Id');
+            business_type_id = $(this).attr('id');
             $('#confirmModal').modal('show');
             $('.modal-title').text("Delete Business Type");
         }); 

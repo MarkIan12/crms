@@ -172,9 +172,9 @@
             if($('#action').val() == 'Edit')
             {
                 var formData = new FormData(this);
-                formData.append('Id', $('#hidden_id').val());
+                formData.append('id', $('#hidden_id').val());
                 $.ajax({
-                    url: "{{ route('update_payment_terms', ':Id') }}".replace(':Id', $('#hidden_id').val()),
+                    url: "{{ route('update_payment_terms', ':id') }}".replace(':id', $('#hidden_id').val()),
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -212,16 +212,16 @@
         });
 
         $(document).on('click', '.edit', function(){
-            var id = $(this).attr('Id');
+            var id = $(this).attr('id');
             $('#form_result').html('');
             $.ajax({
-                url: "{{ route('edit_payment_terms', ['Id' => '_id_']) }}".replace('_id_', id),
+                url: "{{ route('edit_payment_terms', ['id' => '_id_']) }}".replace('_id_', id),
                 dataType: "json",
                 success: function(html){
                     $('#Type').val(html.data.Type).trigger('change');
                     $('#Name').val(html.data.Name);
                     $('#Description').val(html.data.Description);
-                    $('#hidden_id').val(html.data.Id);
+                    $('#hidden_id').val(html.data.id);
                     $('.modal-title').text("Edit Payment Terms");
                     $('#action_button').val("Update");
                     $('#action').val("Edit");
@@ -232,7 +232,7 @@
 
         var payment_terms_id;
         $(document).on('click', '.delete', function(){
-            payment_terms_id = $(this).attr('Id');
+            payment_terms_id = $(this).attr('id');
             $('#confirmModal').modal('show');
             $('.modal-title').text("Delete Payment Terms");
         }); 

@@ -12,5 +12,4 @@ class Country extends Model
     protected $fillable = [
         'Name', 'Description'
     ];
-    protected $dates = ['deleted_at'];
 }

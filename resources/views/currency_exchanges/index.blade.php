@@ -43,7 +43,7 @@
                         <select class="form-control js-example-basic-single" name="FromCurrencyId" id="from_currency" style="position: relative !important" title="Select Currency">
                             <option value="" disabled selected>Select Currency</option>
                             @foreach($currencies as $currency)
-                                <option value="{{ $currency->Id }}">{{ $currency->Name }}</option>
+                                <option value="{{ $currency->id }}">{{ $currency->Name }}</option>
                             @endforeach
                         </select>
                     </div>  
@@ -52,7 +52,7 @@
                         <select class="form-control js-example-basic-single" id="to_currency" name="ToCurrencyId"  style="position: relative !important" title="Select Currency">
                             <option value="" disabled selected>Select Currency</option>
                             @foreach($currencies as $currency)
-                                <option value="{{ $currency->Id }}">{{ $currency->Name }}</option>
+                                <option value="{{ $currency->id }}">{{ $currency->Name }}</option>
                             @endforeach
                         </select>
                     </div>    
@@ -185,9 +185,9 @@
             if($('#action').val() == 'Edit')
             {
                 var formData = new FormData(this);
-                formData.append('Id', $('#hidden_id').val());
+                formData.append('id', $('#hidden_id').val());
                 $.ajax({
-                    url: "{{ route('update_currency_exchange', ':Id') }}".replace(':Id', $('#hidden_id').val()),
+                    url: "{{ route('update_currency_exchange', ':id') }}".replace(':id', $('#hidden_id').val()),
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -227,18 +227,18 @@
         });
 
         $(document).on('click', '.edit', function(){
-            var id = $(this).attr('Id');
+            var id = $(this).attr('id');
             console.log(id);
             $('#form_result').html('');
             $.ajax({
-                url: "{{ route('edit_currency_exchange', ['Id' => '_id_']) }}".replace('_id_', id),
+                url: "{{ route('edit_currency_exchange', ['id' => '_id_']) }}".replace('_id_', id),
                 dataType: "json",
                 success: function(html){
                     $('#EffectiveDate').val(html.data.EffectiveDate);
                     $('#from_currency').val(html.data.FromCurrencyId).trigger('change');
                     $('#to_currency').val(html.data.ToCurrencyId).trigger('change');
                     $('#ExchangeRate').val(html.data.ExchangeRate);
-                    $('#hidden_id').val(html.data.Id);
+                    $('#hidden_id').val(html.data.id);
                     $('.modal-title').text("Edit Currency Exchange Rate");
                     $('#action_button').val("Update");
                     $('#action').val("Edit");
@@ -249,7 +249,7 @@
 
         var currency_exchange_id;
         $(document).on('click', '.delete', function(){
-            currency_exchange_id = $(this).attr('Id');
+            currency_exchange_id = $(this).attr('id');
             $('#confirmModal').modal('show');
             $('.modal-title').text("Delete Currency Exchange Rates");
         }); 
