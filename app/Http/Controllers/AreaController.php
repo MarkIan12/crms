@@ -18,9 +18,9 @@ class AreaController extends Controller
         {
             return datatables()->of($areas)
                 ->addColumn('action', function ($data) {
-                    $buttons = '<button type="button" name="edit" id="' . $data->Id . '" class="edit btn btn-primary">Edit</button>';
+                    $buttons = '<button type="button" name="edit" id="' . $data->id . '" class="edit btn btn-primary">Edit</button>';
                     $buttons .= '&nbsp;&nbsp;';
-                    $buttons .= '<button type="button" name="delete" id="' . $data->Id . '" class="delete btn btn-danger">Delete</button>';
+                    $buttons .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger">Delete</button>';
                     return $buttons;
                 })
                 ->rawColumns(['action'])

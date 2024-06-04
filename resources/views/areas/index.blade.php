@@ -47,7 +47,7 @@
                         <select class="form-control js-example-basic-single" name="RegionId" id="RegionId" style="position: relative !important" title="Select Company">
                             <option value="" disabled selected>Select Region</option>
                             @foreach($regions as $region)
-                                <option value="{{ $region->Id }}">{{ $region->Name }}</option>
+                                <option value="{{ $region->id }}">{{ $region->Name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -193,9 +193,9 @@
             if($('#action').val() == 'Edit')
             {
                 var formData = new FormData(this);
-                formData.append('Id', $('#hidden_id').val());
+                formData.append('id', $('#hidden_id').val());
                 $.ajax({
-                    url: "{{ route('update_area', ':Id') }}".replace(':Id', $('#hidden_id').val()),
+                    url: "{{ route('update_area', ':id') }}".replace(':id', $('#hidden_id').val()),
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -233,23 +233,23 @@
         });
 
         $(document).on('click', '.edit', function(){
-            var id = $(this).attr('Id');
+            var id = $(this).attr('id');
             $('#form_result').html('');
             $.ajax({
-                url: "{{ route('edit_area', ['Id' => '_id_']) }}".replace('_id_', id),
+                url: "{{ route('edit_area', ['id' => '_id_']) }}".replace('_id_', id),
                 dataType: "json",
                 success: function(html){
                     $('#Type').val(html.data.Type).trigger('change');
                     $('#RegionId').val(html.data.RegionId).trigger('change');
                     $('#Name').val(html.data.Name);
                     $('#Description').val(html.data.Description);
-                    $('#hidden_id').val(html.data.Id);
+                    $('#hidden_id').val(html.data.id);
                     $('.modal-title').text("Edit Region");
                     $('#action_button').val("Update");
                     $('#action').val("Edit");
                     
                     var type = html.data.Type;
-                    $('#Type').val(type);
+                    $('#Type').val(type).trigger('change');
                     
                     $('#formArea').modal('show');
                 }

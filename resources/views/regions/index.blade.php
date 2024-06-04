@@ -179,9 +179,9 @@
             if($('#action').val() == 'Edit')
             {
                 var formData = new FormData(this);
-                formData.append('Id', $('#hidden_id').val());
+                formData.append('id', $('#hidden_id').val());
                 $.ajax({
-                    url: "{{ route('update_region', ':Id') }}".replace(':Id', $('#hidden_id').val()),
+                    url: "{{ route('update_region', ':id') }}".replace(':id', $('#hidden_id').val()),
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -219,21 +219,21 @@
         });
 
         $(document).on('click', '.edit', function(){
-            var id = $(this).attr('Id');
+            var id = $(this).attr('id');
             $('#form_result').html('');
             $.ajax({
-                url: "{{ route('edit_region', ['Id' => '_id_']) }}".replace('_id_', id),
+                url: "{{ route('edit_region', ['id' => '_id_']) }}".replace('_id_', id),
                 dataType: "json",
                 success: function(html){
                     $('#Name').val(html.data.Name);
                     $('#Description').val(html.data.Description);
-                    $('#hidden_id').val(html.data.Id);
+                    $('#hidden_id').val(html.data.id);
                     $('.modal-title').text("Edit Region");
                     $('#action_button').val("Update");
                     $('#action').val("Edit");
                     
                     var type = html.data.Type;
-                    $('#Type').val(type);
+                    $('#Type').val(type).trigger('change');
                     
                     $('#formRegion').modal('show');
                 }
@@ -241,7 +241,7 @@
         });
                 
         $(document).on('click', '.delete', function(){
-            region_id = $(this).attr('Id');
+            region_id = $(this).attr('id');
             $('#confirmModal').modal('show');
             $('.modal-title').text("Delete Region");
         });    

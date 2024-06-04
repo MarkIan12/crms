@@ -8,6 +8,11 @@ class CustomerRequirement extends Model
 {
     use SoftDeletes;
     protected $table = "customerrequirements";
+    protected $fillable = [
+        'CrrNumber', 'CreatedDate', 'ClientId', 'Priority', 'ApplicationId', 'DueDate', 'PotentialVolume', 'UnitOfMeasureId',
+        'PrimarySalesPersonId', 'TargetPrice', 'CurrencyId', 'SecondarySalesPersonId', 'Competitor', 'CompetitorPrice',
+        'NatureOfRequestId', 'RefCrrNumber', 'RefRpeNumber', 'DetailsOfRequirement'
+    ];
 
     public function client()
     {
@@ -18,4 +23,5 @@ class CustomerRequirement extends Model
     {
         return $this->belongsTo(ProductApplication::class, 'ApplicationId', 'id');
     }
+
 }
