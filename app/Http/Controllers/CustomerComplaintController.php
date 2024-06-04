@@ -49,7 +49,7 @@ class CustomerComplaintController extends Controller
     // May 29, 2024 Jun Jihad Barroga Created For Unique Service Number Generation
     public function getLastIncrement($year, $clientCode)
     {
-        $lastUniqueID = CustomerComplaint::where('ServiceNumber', 'like', 'FBK-' . $clientCode . '-' . $year . '-%')
+        $lastUniqueID = CustomerComplaint::where('ServiceNumber', 'like', 'CPL-' . $clientCode . '-' . $year . '-%')
                             ->orderBy('ServiceNumber', 'desc')
                             ->first();
     
@@ -99,7 +99,7 @@ class CustomerComplaintController extends Controller
         $categories = IssueCategory::all();
         $departments = ConcernDepartment::all();
         // return view('customer_complaints.index', compact('clients', 'contacts', 'categories', 'departments')); 
-        return redirect()->route('customer_complaints.index')->with('success', 'Customer Feedback created successfully.');
+        return redirect()->route('customer_complaint.index')->with('success', 'Customer Feedback created successfully.');
 
         }
         public function view($id)
