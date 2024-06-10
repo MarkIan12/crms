@@ -46,23 +46,24 @@ class CustomerFeedbackController extends Controller
         $contacts = Contact::where('CompanyId', $clientId)->pluck('ContactName', 'id');
         return response()->json($contacts);
     }
+    
     // May 28, 2024 Jun Jihad Barroga Modified For Customer Complaint
     // May 29, 2024 Jun Jihad Barroga Created For Unique Service Number Generation
     public function getLastIncrementF($year, $clientCode)
-{
-    $lastUniqueID = CustomerFeedback::where('ServiceNumber', 'like', 'FBK-' . $clientCode . '-' . $year . '-%')
-                        ->orderBy('ServiceNumber', 'desc')
-                        ->first();
+    {
+        $lastUniqueID = CustomerFeedback::where('ServiceNumber', 'like', 'FBK-' . $clientCode . '-' . $year . '-%')
+                            ->orderBy('ServiceNumber', 'desc')
+                            ->first();
 
-    if ($lastUniqueID) {
-        $parts = explode('-', $lastUniqueID->ServiceNumber);
-        $lastIncrement = end($parts);
-    } else {
-        $lastIncrement = '0000';
+        if ($lastUniqueID) {
+            $parts = explode('-', $lastUniqueID->ServiceNumber);
+            $lastIncrement = end($parts);
+        } else {
+            $lastIncrement = '0000';
+        }
+
+        return response()->json(['lastIncrement' => $lastIncrement]);
     }
-
-    return response()->json(['lastIncrement' => $lastIncrement]);
-}
 
     // May 29, 2024 Jun Jihad Barroga Created For Unique Service Number Generation
     
@@ -125,13 +126,11 @@ class CustomerFeedbackController extends Controller
 
         ]);
         CustomerFeedback::whereId($id)->update([
-                'Title' => $validatedData['TitleEdit'],
-                'ClientContactId' => $validatedData['ClientContactIdEdit'],
-                'ConcernedDepartmentId' => $validatedData['ConcernedDepratmentEdit'],
-                'Description' => $validatedData['DescriptionEdit'],
-                // 'Classification' => $validatedData['CLassificationEdit'],
-
-            ]);
+            'Title' => $validatedData['TitleEdit'],
+            'ClientContactId' => $validatedData['ClientContactIdEdit'],
+            'ConcernedDepartmentId' => $validatedData['ConcernedDepratmentEdit'],
+            'Description' => $validatedData['DescriptionEdit'],
+        ]);
         return response()->json(['success' => true]);
     }
     public function destroy($id)

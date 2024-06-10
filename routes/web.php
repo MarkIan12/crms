@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerComplaintController;
 use App\Http\Controllers\CustomerFeedbackController;
 use App\Http\Controllers\SampleRequestController;
+use App\Http\Controllers\ActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,16 +102,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('contacts-by-client/{clientId}', [CustomerComplaintController::class, 'getContactsByClient']);
     Route::get('get-last-increment/{year}/{clientCode}', [CustomerComplaintController::class, 'getLastIncrement']);
     
-     // Customer Feedback 
-     Route::get('/customer_feedback', 'CustomerFeedbackController@index')->name('customer_feedback.index');
-     Route::post('/new_customer_feedback', 'CustomerFeedbackController@store')->name('customer_feedback.store');
-     Route::get('customer_feedback/{id}/edit', 'CustomerFeedbackController@edit');
-     Route::put('customer_feedback/{id}', 'CustomerFeedbackController@update');
-     Route::get('/customer-feedback/view/{id}', 'CustomerFeedbackController@view')->name('customer-feedback.view');
-     Route::delete('delete_feedback/{id}', 'CustomerFeedbackController@destroy')->name('customer-feedback.destroy');
+    // Customer Feedback 
+    Route::get('/customer_feedback', 'CustomerFeedbackController@index')->name('customer_feedback.index');
+    Route::post('/new_customer_feedback', 'CustomerFeedbackController@store')->name('customer_feedback.store');
+    Route::get('customer_feedback/{id}/edit', 'CustomerFeedbackController@edit');
+    Route::put('customer_feedback/{id}', 'CustomerFeedbackController@update');
+    Route::get('/customer-feedback/view/{id}', 'CustomerFeedbackController@view')->name('customer-feedback.view');
+    Route::delete('delete_feedback/{id}', 'CustomerFeedbackController@destroy')->name('customer-feedback.destroy');
 
-     Route::get('contacts-by-client-f/{clientId}', [CustomerFeedbackController::class, 'getContactsByClientF']);
-     Route::get('get-last-increment-f/{year}/{clientCode}', [CustomerFeedbackController::class, 'getLastIncrementF']);
+    Route::get('contacts-by-client-f/{clientId}', [CustomerFeedbackController::class, 'getContactsByClientF']);
+    Route::get('get-last-increment-f/{year}/{clientCode}', [CustomerFeedbackController::class, 'getLastIncrementF']);
 
     // Nature of Request
     Route::get('/nature_request', 'NatureRequestController@index')->name('nature_request.index');
@@ -149,6 +150,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Activities
     Route::get('/activities', 'ActivityController@index')->name('activities.index');
+    Route::post('/new_activity', 'ActivityController@store')->name('activity.store'); 
+    Route::get('/get-contacts/{clientId}', [ActivityController::class, 'getContacts']); 
+    Route::get('/edit_activity/{id}', 'ActivityController@edit')->name('edit_activity');    
+    Route::post('/update_activity/{id}', 'ActivityController@update')->name('update_activity');
 
     // Product Applications
     Route::get('/product_applications', 'ProductApplicationController@index')->name('product_applications.index');

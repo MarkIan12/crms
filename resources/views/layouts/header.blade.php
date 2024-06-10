@@ -315,17 +315,15 @@
                             </div>
                         </li>
                         <li class="nav-item"> 
-                            <a class="nav-link" data-toggle="collapse" href="#setup" aria-expanded="false" aria-controls="setup">
+                            <a class="nav-link" data-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
                                 <i class="icon-cog menu-icon"></i>
                                 <span class="menu-title">Reports</span>
                                 <i class="menu-arrow"></i>
                             </a>
-                            <div class="collapse" id="setup">
+                            <div class="collapse" id="reports">
                                 <ul class="nav flex-column sub-menu">
-                                    <!-- <li class="nav-item"><a class="nav-link" href="{{ url('/user') }}">User Accounts</a></li> -->
-                                    <li class="nav-item"><a class="nav-link" href="">Roles</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="">Company</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="">Department</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="">Price Request Summary</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="">Transaction/Activity Summary</a></li>
                                 </ul>
                             </div>
                         </li>

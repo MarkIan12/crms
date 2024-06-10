@@ -11,7 +11,7 @@ class AreaController extends Controller
     // List
     public function index()
     {
-        $areas = Area::with('region')->orderBy('Id', 'desc')->get();
+        $areas = Area::with('region')->orderBy('id', 'desc')->get();
         $regions = Region::all();
 
         if (request()->ajax()) 
