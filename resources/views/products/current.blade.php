@@ -10,7 +10,7 @@
                         <th width="30%">Code</th>
                         <th width="30%">Created By</th>
                         <th width="20%">Date Created</th>
-                        <th width="10%">Price</th>
+                        <!-- <th width="10%">Price</th> -->
                         <th width="10%">Action</th>
                     </tr>
                 </thead>
@@ -26,8 +26,6 @@
 <script>
     $(document).ready(function(){
         $('#product_table').DataTable({
-            processing: true,
-            serverSide: true,
             ajax: {
                 url: "{{ route('product.current') }}"
             },
@@ -47,10 +45,10 @@
                         return moment(data).format('YYYY-MM-DD'); // Format as desired
                     }
                 },
-                {
-                    data: '',
-                    name: ''
-                },
+                // {
+                //     data: '',
+                //     name: ''
+                // },
                 {
                     data: 'action',
                     name: 'action',

@@ -10978,6 +10978,14 @@ textarea.is-invalid.tt-hint {
   width: 100%;
 }
 
+.form-view {
+  padding: 20px 20px;
+}
+
+.btn-table {
+  padding: 10px 15px !important;
+}
+
 @media (min-width: 576px) {
   .form-inline label {
     display: flex;
@@ -28527,7 +28535,7 @@ div.tagsinput span.tag a {
   font-size: 1rem;
   line-height: 1;
   margin-right: 1rem;
-  color: #6C7383;
+  color: #050C9C;
 }
 
 .rtl .sidebar .nav .nav-item .nav-link i.menu-icon {
@@ -28634,6 +28642,7 @@ div.tagsinput span.tag a {
 
 .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link {
   margin: 0;
+  color: #050C9C;
 }
 
 .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded="true"] {
@@ -30597,4 +30606,6 @@ div.tagsinput span.tag a {
     display: none;
   }
 }
+
+
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */

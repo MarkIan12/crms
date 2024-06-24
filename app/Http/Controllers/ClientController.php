@@ -325,8 +325,8 @@ class ClientController extends Controller
         
                     if ($addressId) {
                         $address = Address::where('CompanyId', $client->id)
-                                          ->where('id', $addressId)
-                                          ->first();
+                                        ->where('id', $addressId)
+                                        ->first();
                         if ($address) {
                             // Update the existing address record
                             $address->update([

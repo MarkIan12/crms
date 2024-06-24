@@ -95,9 +95,9 @@ class ProductController extends Controller
                         return $user ? $user->full_name : '';
                     })
                     ->addColumn('action', function($data){
-                        $buttons = '<a type="button" href="' . route("product.view", ["id" => $data->id]) . '" name="view" id="' . $data->id . '" class="edit btn btn-success">View</a>';
+                        $buttons = '<a type="button" href="' . route("product.view", ["id" => $data->id]) . '" name="view" id="' . $data->id . '" class="edit btn-table btn btn-success"><i class="ti-eye"></i></a>';
                         $buttons .= '&nbsp;&nbsp;';
-                        $buttons .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger">Delete</button>';
+                        $buttons .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn-table btn btn-danger"><i class="ti-trash"></i></button>';
                         return $buttons;
                     })
                     ->rawColumns(['action'])
