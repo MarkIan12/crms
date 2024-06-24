@@ -22,9 +22,11 @@
         <link href="{{ asset('css/select.dataTables.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/feather.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/buttons.bootstrap4.css') }}" rel="stylesheet">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container-scroller">
@@ -75,7 +77,7 @@
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="{{ url('/home') }}">
                                 <i class="icon-grid menu-icon"></i>
                                 <span class="menu-title">Dashboard</span>
                             </a>
@@ -140,7 +142,7 @@
                             </a>
                             <div class="collapse" id="form-elements">
                                 <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"><a class="nav-link" href="{{ url('/product') }}">Products</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ url('/current_products') }}">Products</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -322,8 +324,8 @@
                             </a>
                             <div class="collapse" id="reports">
                                 <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"><a class="nav-link" href="">Price Request Summary</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="">Transaction/Activity Summary</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Price Request Summary</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">Transaction/Activity Summary</a></li>
                                 </ul>
                             </div>
                         </li>

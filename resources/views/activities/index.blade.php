@@ -60,7 +60,8 @@
                                 <label>Related To</label>
                                 <select class="form-control js-example-basic-single" name="RelatedTo" id="RelatedTo" style="position: relative !important" title="Select Type">
                                     <option value="" disabled selected>Select Related Entry Type</option>
-                                    <option value="10">Customer Requirement</option><option value="20">Request Product Evaluation</option>
+                                    <option value="10">Customer Requirement</option>
+                                    <option value="20">Request Product Evaluation</option>
                                     <option value="30">Sample Request</option>
                                     <option value="35">Price Request</option>
                                     <option value="40">Complaint</option>
@@ -131,8 +132,7 @@
                                 <select class="form-control js-example-basic-single" name="SecondaryResponsibleUserId" id="SecondaryResponsibleUserId" style="position: relative !important" title="Select Contact">
                                     <option value="" disabled selected>Select Secondary Responsible</option>
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}" 
-                                            {{ $currentUser && ($currentUser->id == $user->id || $currentUser->user_id == $user->id) ? 'selected' : '' }}>
+                                        <option value="{{ $user->id }}">
                                             {{ $user->full_name }}
                                         </option>
                                     @endforeach
@@ -143,6 +143,32 @@
                             <div class="form-group">
                                 <label>Title</label>
                                 <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Attachments</label>
+                                <input type="file" class="form-control" name="path[]" multiple>
+                                <small><b style="color:red">Note:</b> The file must be a type of: jpg, jpeg, png, pdf, doc, docx.</small>
+                                <div class="col-sm-9">
+                                    <ul id="fileList"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 edit-status" style="display: none;">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control js-example-basic-single" name="Status" id="Status" style="position: relative !important" title="Select Type">
+                                    <option value="" disabled selected>Select Status</option>
+                                    <option value="10">Open</option>
+                                    <option value="20">Closed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 edit-status" style="display: none;">
+                            <div class="form-group">
+                                <label>Date Closed</label>
+                                <input type="date" class="form-control" id="DateClosed" name="DateClosed">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -164,20 +190,36 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> 
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+
 
 <script>
     $(document).ready(function(){
         function fetchData() {
-            var isShowOpen = $('#IsShowOpen').is(':checked');
-            var isShowClosed = $('#IsShowClosed').is(':checked');
+            var isShowOpen = $('#IsShowOpen').is(':checked') ? 'true' : 'false';
+            var isShowClosed = $('#IsShowClosed').is(':checked') ? 'true' : 'false';
 
-            $('#activity_table').DataTable({
-                processing: true,
-                serverSide: true,
-                destroy: true, // This allows the DataTable to be re-initialized
+            dataTableInstance = new DataTable('#activity_table', {
+                destroy: true, // Destroy and re-initialize DataTable on each call
+                pageLength: 25,
+                layout: {
+                    topStart: {
+                        buttons: [
+                            'copy',
+                            {
+                                extend: 'excel',
+                                text: 'Export to Excel',
+                                filename: 'Activity', // Set the custom file name
+                                title: 'Activity' // Set the custom title
+                            }
+                        ]
+                    }
+                },
                 ajax: {
                     url: "{{ route('activities.index') }}",
                     data: {
@@ -193,9 +235,6 @@
                     {
                         data: 'ScheduleFrom',
                         name: 'ScheduleFrom',
-                        render: function(data, type, row) {
-                            return moment(data).format('YYYY-MM-DD'); // Format as desired
-                        }
                     },
                     {
                         data: 'client.Name',
@@ -228,7 +267,7 @@
                 ]
             });
         }
-
+        
         // Initial load
         fetchData();
 
@@ -294,10 +333,13 @@
                         {
                             html = '<div class="alert alert-success">' + data.success + '</div>';
                             $('#form_activity')[0].reset();
+                            $('.js-example-basic-single').val('').trigger('change');
                             setTimeout(function(){
                                 $('#formActivity').modal('hide');
                             }, 2000);
-                            $('#activity_table').DataTable().ajax.reload();
+                            if (dataTableInstance) {
+                                dataTableInstance.ajax.reload();
+                            }
                             setTimeout(function(){
                                 $('#form_result').empty(); 
                             }, 2000); 
@@ -312,7 +354,7 @@
                 var formData = new FormData(this);
                 formData.append('id', $('#hidden_id').val());
                 $.ajax({
-                    url: "{{ route('update_project_name', ':id') }}".replace(':id', $('#hidden_id').val()),
+                    url: "{{ route('update_activity', ':id') }}".replace(':id', $('#hidden_id').val()),
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -338,7 +380,9 @@
                             setTimeout(function(){
                                 $('#formActivity').modal('hide');
                             }, 2000);
-                            $('#activity_table').DataTable().ajax.reload();
+                            if (dataTableInstance) {
+                                dataTableInstance.ajax.reload();
+                            }
                             setTimeout(function(){
                                 $('#form_result').empty(); 
                             }, 2000); 
@@ -350,6 +394,7 @@
         });
 
         $(document).on('click', '.edit', function(){
+            $('.edit-status').show();
             var id = $(this).attr('id');
             $('#form_result').html('');
             $.ajax({
@@ -359,6 +404,7 @@
                     var data = response.data;
                     var primaryUser = response.primaryUser;
                     var secondaryUser = response.secondaryUser;
+                    var files = response.files;
 
                     $('#Title').val(data.Title);
                     $('#TransactionNumber').val(data.TransactionNumber);
@@ -369,41 +415,46 @@
                     $('#ClientContactId').val(data.ClientContactId).trigger('change');
                     $('#PrimaryResponsibleUserId').val(primaryUser ? primaryUser.id : '').trigger('change');
                     $('#SecondaryResponsibleUserId').val(secondaryUser ? secondaryUser.id : '').trigger('change');
+
+                    var fileList = '';
+
+                    files.forEach(function(file) {
+                        var fileName = file.split('/').pop(); 
+                        fileList += '<li><a href="' + '{{ asset("storage") }}' + '/' + file + '" download="' + fileName + '">' + fileName + '</a></li>';
+                    });
+
+                    $('#fileList').html(fileList);
+
+                    $('#fileList').html(fileList);
+
+                    $('.edit-status').show();
                     $('#hidden_id').val(data.id);
                     $('.modal-title').text("Edit Activity");
                     $('#action_button').val("Update");
                     $('#action').val("Edit");
                     $('#Type').val(data.Type).trigger('change');
+                    $('#Status').val(data.Status).trigger('change');
                     $('#RelatedTo').val(data.RelatedTo).trigger('change');
-                    
+                    var clientId = data.ClientId;
+                    $.ajax({
+                        url: "{{ url('get-contacts') }}/" + clientId,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(contactData) {
+                            $('#ClientContactId').empty();
+                            $('#ClientContactId').append('<option value="" disabled selected>Select Contact</option>');
+                            $.each(contactData, function(key, value) {
+                                $('#ClientContactId').append('<option value="'+ key +'">'+ value +'</option>');
+                            });
+                            $('#ClientContactId').val(data.ClientContactId);
+                        }
+                    });
+
                     $('#formActivity').modal('show');
                 }
             });
         });
 
-        $(document).on('click', '.delete', function(){
-            project_name_id = $(this).attr('Id');
-            $('#confirmModal').modal('show');
-            $('.modal-title').text("Delete Project Name");
-        });    
-
-        $('#delete_project_name').click(function(){
-            $.ajax({
-                url: "{{ url('delete_project_name') }}/" + project_name_id, 
-                method: "GET",
-                beforeSend:function(){
-                    $('#delete_project_name').text('Deleting...');
-                },
-                success:function(data)
-                {
-                    setTimeout(function(){
-                        $('#confirmModal').modal('hide');
-                        $('#activity_table').DataTable().ajax.reload();
-                    }, 2000);
-                }
-            })
-        });
     });
-
 </script>
 @endsection

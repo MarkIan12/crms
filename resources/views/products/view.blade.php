@@ -103,8 +103,35 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="materials" role="tabpanel" aria-labelledby="materials-tab"></div>
-                <div class="tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">...</div>
+                <div class="tab-pane fade show active" id="materials" role="tabpanel" aria-labelledby="materials-tab">
+                    <div class="col-lg-12" align="right">
+                        <button type="button" class="btn btn-md btn-primary submit_approval" name="submit_approval" id="">Update</button>
+                    </div>
+                    <table class="table table-striped table-hover" id="material_table" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Percentage</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
+                    <div class="col-lg-12" align="right">
+                        <button type="button" class="btn btn-md btn-primary submit_approval" name="submit_approval" id="">Add</button>
+                    </div>
+                    <table class="table table-striped table-hover" id="specification_table" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Specification</th>
+                                <th>Testing Condition</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
                 <div class="tab-pane fade" id="pds" role="tabpanel" aria-labelledby="pds-tab">...</div>
                 <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab"></div>
                 <div class="tab-pane fade" id="rmc" role="tabpanel" aria-labelledby="rmc-tab">...</div>
@@ -145,13 +172,65 @@
     }
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+
 <script>
     $(document).ready(function(){
         $(document).on('click', '.submit_approval', function(){
             product_id = $(this).attr('id');
             $('#confirmModal').modal('show');
             $('.modal-title').text("Submit for Approval");
+        });
+
+        dataTableInstance = new DataTable('#material_table', {
+            destroy: true, // Destroy and re-initialize DataTable on each call
+            processing: true,
+            serverSide: true, // Ensure server-side processing is enabled
+            pageLength: 25,
+            layout: {
+                topStart: {
+                    buttons: [
+                        'copy',
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            filename: 'Material', // Set the custom file name
+                            title: 'Material' // Set the custom title
+                        }
+                    ]
+                }
+            },
+            ajax: {
+                url: "{{ route('activities.index') }}"
+            },
+            columns: [
+                {
+                    data: 'ActivityNumber',
+                    name: 'ActivityNumber'
+                },
+                {
+                    data: 'ScheduleFrom',
+                    name: 'ScheduleFrom',
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [0, 1], // Target the Title column
+                    render: function(data, type, row) {
+                        return '<div style="white-space: break-spaces; width: 100%;">' + data + '</div>';
+                    }
+                }
+            ]
         });
     });   
 </script>

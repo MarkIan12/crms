@@ -154,6 +154,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-contacts/{clientId}', [ActivityController::class, 'getContacts']); 
     Route::get('/edit_activity/{id}', 'ActivityController@edit')->name('edit_activity');    
     Route::post('/update_activity/{id}', 'ActivityController@update')->name('update_activity');
+    Route::get('get_contacts/{clientId}', [ActivityController::class, 'getContactsByClient']);
+    Route::get('view_activity/{id}', 'ActivityController@view')->name('activity.view');
+    Route::delete('delete_activity/{id}', 'ActivityController@close')->name('delete_activity');
+    Route::post('open_activity/{id}', 'ActivityController@open')->name('open_activity');
 
     // Product Applications
     Route::get('/product_applications', 'ProductApplicationController@index')->name('product_applications.index');
